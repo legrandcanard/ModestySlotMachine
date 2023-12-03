@@ -1,0 +1,7 @@
+﻿@using ModestySlotMachine.Slots.LibertyBell;
+
+<div class="reel-symbol-preview reel-symbol-@(Symbol.ToString())"></div>
+
+@code {
+    [Parameter] public LibertyBellSymbols Symbol { get; set; }
+}

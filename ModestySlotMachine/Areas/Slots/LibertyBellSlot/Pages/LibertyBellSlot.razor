@@ -1,0 +1,142 @@
+﻿@using Microsoft.Extensions.Logging;
+@using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services;
+@using ModestySlotMachine.Common.Utill;
+@using ModestySlotMachine.Core.Entities;
+@using ModestySlotMachine.Core.Services;
+@using ModestySlotMachine.Slots.LibertyBell;
+@using static ModestySlotMachine.Slots.LibertyBell.LibertyBellSlotMachine;
+
+@inject LibertyBellSlotService LibertyBellSlotService
+@inject LibertyBellAudioService LibertyBellAudioService
+@inject UserDataService UserDataService
+@inject ILogger<LibertyBellSlot> Logger
+@inject IJSRuntime JSRuntime
+
+<div class="component-wrapper">
+    <div class="component">
+        <div class="title">
+            <h1>🕭 LIBERTY BELL 🕭</h1>
+            <span>Hembert & Warlett Inc.</span>
+        </div>
+        <div class="reels-wrapper">
+            <div class="reels">
+                <div class="reel-payline"></div>
+                <Reel @ref="reel1" ReelNumber="1" SlotMachine="machine"></Reel>
+                <Reel @ref="reel2" ReelNumber="2" SlotMachine="machine"></Reel>
+                <Reel @ref="reel3" ReelNumber="3" SlotMachine="machine"></Reel>
+            </div>
+        </div>
+        <div class="controls">
+            <button type="button" class="btn btn-pull mb-3" @onclick="MakeSpinAsync" disabled="@(isSpinning ? "disabled" : null)">
+                <i class="bi bi-arrow-repeat"></i> Pull
+            </button>
+            <div class="balance-wrapper">
+                <div class="balance">
+                    @balance.ToString("C", Cultures.UnitedStates)
+                </div>
+            </div>
+            <div class="payout-chart-wrapper">
+                <div class="payout-chart">
+                <table>
+                    @foreach (var payout in payouts.Take(3))
+                    {
+                        <tr>
+                            <td>@payout.Title</td>
+                            <td class="payout">
+                                @foreach (var reqirement in payout.Requirements)
+                                {
+                                    foreach (var _ in Enumerable.Range(0, reqirement.Amount))
+                                    {
+                                        <ReelSymbolPreview Symbol="reqirement.Symbol"></ReelSymbolPreview>
+                                    }
+                                }
+                            </td>
+                            <td>¢@payout.Reward</td>
+                        </tr>
+                    }
+                </table>
+                <div class="vertical-divider"></div>
+                <table>
+                    @foreach (var payout in payouts.Skip(3).Take(3))
+                    {
+                        <tr>
+                            <td>@payout.Title</td>
+                            <td class="payout">
+                                @foreach (var reqirement in payout.Requirements)
+                                {
+                                    foreach (var _ in Enumerable.Range(0, reqirement.Amount))
+                                    {
+                                        <ReelSymbolPreview Symbol="reqirement.Symbol"></ReelSymbolPreview>
+                                    }
+                                }
+                            </td>
+                            <td>¢@payout.Reward</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Reel reel1, reel2, reel3;
+    private uint reel1SpinDuration = 1000,
+        reel2SpinDuration = 2000,
+        reel3SpinDuration = 4000;
+    private LibertyBellSlotMachine machine;
+    private LibertyBellSymbols[] reelValues;
+    private bool isSpinning = false;
+    private Payout<LibertyBellSymbols>[] payouts;
+    private Payout<LibertyBellSymbols> winCombination;
+    private decimal balance;
+
+    protected override async Task OnParametersSetAsync()
+    {        
+        reelValues = new LibertyBellSymbols[3];
+        machine = LibertyBellSlotService.CreateSlotMachine();
+        payouts = LibertyBellSlotService.GetPayouts().OrderByDescending(p => p.Reward).ToArray();
+
+        await base.OnParametersSetAsync();
+    }
+
+    async Task MakeSpinAsync()
+    {
+        winCombination = null;
+        var results = machine.GetSpinResults();
+
+        isSpinning = true;
+        await Task.WhenAll(
+            reel1.SpinAsync(results[0], reel1SpinDuration),
+            reel2.SpinAsync(results[1], reel2SpinDuration),
+            reel3.SpinAsync(results[2], reel3SpinDuration)
+        );
+        isSpinning = false;
+
+        if (machine.HasPayout(out Payout<LibertyBellSymbols> result) || true)
+        {
+            reel1.DisplayWinComboStatusAsync();
+            reel2.DisplayWinComboStatusAsync();
+            reel3.DisplayWinComboStatusAsync();
+            await Task.Delay(400);
+            LibertyBellAudioService.PlayBigWinSound();
+            await Task.Delay(1200);
+            LibertyBellAudioService.PlayConisFallSound();
+            balance += result?.Reward ?? 1;
+
+            // await UserDataService.SaveUserDataAsync(new UserData
+            //     {
+            //         Balance = balance
+            //     });
+        }
+    }
+}
+
+<style>
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

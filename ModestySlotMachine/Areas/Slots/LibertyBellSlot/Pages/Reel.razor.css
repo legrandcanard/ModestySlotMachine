@@ -1,0 +1,84 @@
+﻿
+.reel {
+    display: inline-flex;
+    width: 200px;
+    height: 600px;
+    overflow: hidden;
+    background: #b59f78;
+    position: relative;
+    --reels-background-color: #b59f78;
+    --reels-background-transparent-color: rgba(255, 255, 255, 0);
+}
+
+.symbols-container {
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+    transition-property: transform;
+    transform: translateY(-400px);
+    list-style: none;
+    padding: 0;
+}
+
+.reel-symbol {
+    width: 100%;
+    height: 0;
+    aspect-ratio: 1 / 1;
+    transition: all 0.2s ease-out;
+    opacity: 0;
+    background-size: 65% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+    .reel-symbol.show {
+        opacity: 1;
+        height: 200px;
+    }
+
+    .reel-symbol.win {
+        outline: 3px solid red;
+    }
+
+.reel-symbol-Horseshoes {
+    background: url("/images/liberty-bell/horseshoe.png");
+}
+
+.reel-symbol-Star {
+    background: url("/images/liberty-bell/star.png");
+}
+
+.reel-symbol-Diamonds {
+    background: url("/images/liberty-bell/diamond.png");
+}
+
+.reel-symbol-Spades {
+    background: url("/images/liberty-bell/spades.png");
+}
+
+.reel-symbol-Hearts {
+    background: url("/images/liberty-bell/heart.png");
+}
+
+.reel-symbol-LibertyBell {
+    background: url("/images/liberty-bell/bell.png");
+}
+
+.border-fade-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(0deg, var(--reels-background-transparent-color) 0%, var(--reels-background-color) 100%);
+    pointer-events: none;
+}
+
+.border-fade-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(0deg, var(--reels-background-color) 0%, var(--reels-background-transparent-color) 100%);
+    pointer-events: none;
+}
