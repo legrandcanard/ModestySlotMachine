@@ -1,8 +1,8 @@
 ﻿
 .reel {
     display: inline-flex;
-    width: 200px;
-    height: 600px;
+    width: 150px;
+    height: 450px;
     overflow: hidden;
     background: #b59f78;
     position: relative;
@@ -14,7 +14,7 @@
     transition-timing-function: ease-out;
     transition-delay: 0s;
     transition-property: transform;
-    transform: translateY(-400px);
+    transform: translateY(-300px);
     list-style: none;
     padding: 0;
 }
@@ -32,7 +32,7 @@
 
     .reel-symbol.show {
         opacity: 1;
-        height: 200px;
+        height: 150px;
     }
 
     .reel-symbol.win {

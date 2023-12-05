@@ -16,8 +16,8 @@ namespace ModestySlotMachine
             //const int newWidth = 1920;
             //const int newHeight = 1080;
 
-            //window.Width = newWidth;
-            //window.Height = newHeight;
+            window.Width = 1280;
+            window.Height = 1000;
 
             //window.MinimumHeight = newHeight;
             //window.MinimumWidth = newWidth;
