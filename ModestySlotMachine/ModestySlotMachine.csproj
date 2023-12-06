@@ -79,6 +79,11 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Localization.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\Localization.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Localization.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -87,6 +92,10 @@
         <LastGenOutput>Audio.Designer.cs</LastGenOutput>
       </EmbeddedResource>
       <EmbeddedResource Update="Areas\Slots\LibertyBellSlot\Resources\Localization.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Localization.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Localization.Designer.cs</LastGenOutput>
       </EmbeddedResource>

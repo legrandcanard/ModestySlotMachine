@@ -1,5 +1,10 @@
 ﻿@page "/Settings"
+@using ModestySlotMachine.Core.Entities
+@using ModestySlotMachine.Core.Services
+@using ModestySlotMachine.Resources
 @using ModestySlotMachine.Utill
+
+@inject UserDataService UserDataService
 
 <h3 class="fw-bold">Settings</h3>
 
@@ -13,31 +18,37 @@
     </div>
     
     <div class="col-12">
-        <label class="form-label" for="displayMode">Display mode</label>
-        <select class="form-select" id="displayMode" @onchange="e => SetWindowMode(int.Parse(e.Value as string))">
-            <option value="1" selected>Windowed borderless</option>
-            <option value="2">Windowed</option>
-        </select>
-    </div>
-
-    <div class="col-12">
-        <label class="form-label" for="selectedDisplay" @nodel>Selected Display</label>
-        <select class="form-select" id="selectedDisplay">
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
+        <label class="form-label" for="displayMode">Language</label>
+        <select value="@userData?.UserSettings?.Selectedlanguage" class="form-select" id="displayMode" @onchange="e => SetLanguage(e.Value as string)">
+            <option value="en-US" selected>@Localization.ResourceManager.GetString($"Lang_EN_US")</option>
+            <option value="fr-FR" selected>@Localization.ResourceManager.GetString($"Lang_FR_FR")</option>
+            <option value="ru-RU" selected>@Localization.ResourceManager.GetString($"Lang_RU_RU")</option>
         </select>
     </div>
 
 </form>
 
 @code {
+    UserData userData;
 
-    void SetWindowMode(int mode)
+    protected override async Task OnInitializedAsync()
     {
-        if (mode == 1)
-            WindowMode.SetFullScreenWindowMode();
-        else
-            WindowMode.SetWindowedScreenWindowMode();
+        userData = await UserDataService.GetUserDataAsync();
+
+        await base.OnParametersSetAsync();
+    }
+
+    void SetLanguage(string newLanguage)
+    {
+        userData.UserSettings.Selectedlanguage = newLanguage;
+        SaveSettingsAsync().ConfigureAwait(false);
+
+        MauiProgram.SetLocale(newLanguage);
+    }
+
+    async Task SaveSettingsAsync()
+    {
+        await UserDataService.SaveUserDataAsync(userData);
     }
 }
 

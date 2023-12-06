@@ -5,7 +5,13 @@ namespace ModestySlotMachine.Common.Utill
 {
     public static class Cultures
     {
-        public static readonly CultureInfo UnitedStates =
+        public static readonly CultureInfo EnUs =
             CultureInfo.GetCultureInfo("en-US");
+
+        public static readonly CultureInfo Ru =
+            CultureInfo.GetCultureInfo("ru-RU");
+
+        public static readonly CultureInfo Fr =
+            CultureInfo.GetCultureInfo("fr-FR");
     }
 }

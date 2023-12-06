@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services;
+using ModestySlotMachine.Core.Entities;
 using ModestySlotMachine.Core.Repositories;
 using ModestySlotMachine.Core.Services;
 using ModestySlotMachine.Persistent;
+using System.Globalization;
 
 namespace ModestySlotMachine
 {
@@ -23,7 +25,7 @@ namespace ModestySlotMachine
 
 #if DEBUG
 		//builder.Services.AddBlazorWebViewDeveloperTools();
-		builder.Logging.AddDebug();
+		    builder.Logging.AddDebug();
 #endif
 
             builder.Services.AddTransient<LibertyBellSlotService>();
@@ -62,8 +64,22 @@ namespace ModestySlotMachine
             //    });
             //});
 #endif
+             InitApp(builder.Services.BuildServiceProvider()).ConfigureAwait(false);
 
             return builder.Build();
+        }
+
+        public static async Task InitApp(ServiceProvider serviceProvider)
+        {
+            var userDataService = serviceProvider.GetRequiredService<UserDataService>();
+            UserData userData = await userDataService.GetUserDataAsync();
+
+            SetLocale(userData.UserSettings.Selectedlanguage);
+        }
+
+        public static void SetLocale(string locale)
+        {
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = new System.Globalization.CultureInfo(locale);
         }
     }
 }
