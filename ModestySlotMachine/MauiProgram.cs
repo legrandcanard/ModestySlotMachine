@@ -34,37 +34,7 @@ namespace ModestySlotMachine
             builder.Services.AddTransient<IUserDataRepository, LocalUserDataRepository>();
             builder.Services.AddTransient<UserDataService>();
 
-#if WINDOWS
-            //builder.ConfigureLifecycleEvents(events =>  
-            //{  
-            //    events.AddWindows(wndLifeCycleBuilder =>  
-            //    {  
-            //        wndLifeCycleBuilder.OnWindowCreated(window =>  
-            //        {  
-            //            window.ExtendsContentIntoTitleBar = false;  
-            //            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            //            Microsoft.UI.WindowId myWndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);  
-            //            var _appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(myWndId);  
-            //            _appWindow.SetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);                  
-            //        });  
-            //    });  
-            //});
-            //builder.ConfigureLifecycleEvents(events =>
-            //{
-            //    events.AddWindows(wndLifeCycleBuilder =>
-            //    {
-            //        wndLifeCycleBuilder.OnWindowCreated(window =>
-            //        {
-            //            window.ExtendsContentIntoTitleBar = false;
-            //            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            //            Microsoft.UI.WindowId myWndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            //            var _appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(myWndId);
-            //            _appWindow.SetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.FullScreen);
-            //        });
-            //    });
-            //});
-#endif
-             InitApp(builder.Services.BuildServiceProvider()).ConfigureAwait(false);
+            InitApp(builder.Services.BuildServiceProvider()).ConfigureAwait(false);
 
             return builder.Build();
         }
