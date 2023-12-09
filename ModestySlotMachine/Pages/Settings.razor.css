@@ -1,1 +1,5 @@
 ﻿
+input[type="range"]::-webkit-slider-runnable-track {
+    background: #26577C;
+    height: 0.5rem;
+}

@@ -55,11 +55,19 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Plugin.Maui.Audio" Version="2.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Slots\LibertyBellSlot\Models\" />
+      <Folder Include="Resources\Raw\Music\" />
       <Folder Include="wwwroot\libs\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\cowboy-sunset-music-4274.mp3" />
+      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\cowboy39s-sundown-country-ballad-623.mp3" />
+      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\in-the-saloon-116225.mp3" />
+      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\little-adventure-95822.mp3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -69,15 +77,20 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Areas\Slots\LibertyBellSlot\Resources\Audio.Designer.cs">
+      <Compile Update="Areas\Slots\LibertyBellSlot\Resources\FxSounds.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
-        <DependentUpon>Audio.resx</DependentUpon>
+        <DependentUpon>FxSounds.resx</DependentUpon>
       </Compile>
       <Compile Update="Areas\Slots\LibertyBellSlot\Resources\Localization.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Localization.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Areas\Slots\LibertyBellSlot\Resources\BackgroundTracks.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>BackgroundTracks.resx</DependentUpon>
       </Compile>
       <Compile Update="Resources\Localization.Designer.cs">
         <DesignTime>True</DesignTime>
@@ -87,13 +100,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Areas\Slots\LibertyBellSlot\Resources\Audio.resx">
+      <EmbeddedResource Update="Areas\Slots\LibertyBellSlot\Resources\FxSounds.resx">
         <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Audio.Designer.cs</LastGenOutput>
+        <LastGenOutput>FxSounds.Designer.cs</LastGenOutput>
       </EmbeddedResource>
       <EmbeddedResource Update="Areas\Slots\LibertyBellSlot\Resources\Localization.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Areas\Slots\LibertyBellSlot\Resources\BackgroundTracks.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>BackgroundTracks.Designer.cs</LastGenOutput>
       </EmbeddedResource>
       <EmbeddedResource Update="Resources\Localization.resx">
         <Generator>ResXFileCodeGenerator</Generator>

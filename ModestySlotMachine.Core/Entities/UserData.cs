@@ -8,7 +8,8 @@ namespace ModestySlotMachine.Core.Entities
 
         public class Settings
         {
-            public sbyte SoundLevel { get; set; }
+            public double SoundVolume { get; set; }
+            public double FxSoundVolume { get; set; }
             public string? Selectedlanguage { get; set; }
         }
     }

@@ -5,6 +5,7 @@ using ModestySlotMachine.Core.Entities;
 using ModestySlotMachine.Core.Repositories;
 using ModestySlotMachine.Core.Services;
 using ModestySlotMachine.Persistent;
+using Plugin.Maui.Audio;
 using System.Globalization;
 
 namespace ModestySlotMachine
@@ -33,6 +34,8 @@ namespace ModestySlotMachine
 
             builder.Services.AddTransient<IUserDataRepository, LocalUserDataRepository>();
             builder.Services.AddTransient<UserDataService>();
+
+            builder.Services.AddSingleton(AudioManager.Current);
 
             InitApp(builder.Services.BuildServiceProvider()).ConfigureAwait(false);
 

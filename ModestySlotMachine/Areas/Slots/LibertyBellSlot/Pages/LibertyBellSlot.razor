@@ -32,7 +32,7 @@
             </button>
             <div class="balance-wrapper">
                 <div class="balance">
-                    @balance.ToString("C", Cultures.EnUs)
+                    @userData?.Balance.ToString("C", Cultures.EnUs)
                 </div>
             </div>
             <div class="payout-chart-wrapper">
@@ -80,7 +80,10 @@
     </div>
 </div>
 
+@implements IDisposable
+
 @code {
+    private UserData userData;
     private Reel reel1, reel2, reel3;
     private uint reel1SpinDuration = 1000,
         reel2SpinDuration = 2000,
@@ -90,15 +93,38 @@
     private bool isSpinning = false;
     private Payout<LibertyBellSymbols>[] payouts;
     private Payout<LibertyBellSymbols> winCombination;
-    private decimal balance;
 
-    protected override async Task OnParametersSetAsync()
-    {        
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
         reelValues = new LibertyBellSymbols[3];
         machine = LibertyBellSlotService.CreateSlotMachine();
         payouts = LibertyBellSlotService.GetPayouts().OrderByDescending(p => p.Reward).ToArray();
 
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        userData = await UserDataService.GetUserDataAsync();
+
         await base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LibertyBellAudioService.MusicVolume = userData.UserSettings.SoundVolume;
+            LibertyBellAudioService.FxSoundVolume = userData.UserSettings.FxSoundVolume;
+            LibertyBellAudioService.PlayBackgroundMusic();
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+    public void Dispose()
+    {
+        LibertyBellAudioService.StopBackgroundMusic();
     }
 
     async Task MakeSpinAsync()
@@ -114,21 +140,21 @@
         );
         isSpinning = false;
 
-        if (machine.HasPayout(out Payout<LibertyBellSymbols> result) || true)
+        if (machine.HasPayout(out Payout<LibertyBellSymbols> result)/*  || true */)
         {
             reel1.DisplayWinComboStatusAsync();
             reel2.DisplayWinComboStatusAsync();
             reel3.DisplayWinComboStatusAsync();
+
             await Task.Delay(400);
             LibertyBellAudioService.PlayBigWinSound();
-            await Task.Delay(1200);
+            await Task.Delay(1000);
             LibertyBellAudioService.PlayConisFallSound();
-            balance += result?.Reward ?? 1;
 
-            // await UserDataService.SaveUserDataAsync(new UserData
-            //     {
-            //         Balance = balance
-            //     });
+            // userData.Balance += result?.Reward ?? 1;
+            userData.Balance += result.Reward;
+
+            await UserDataService.SaveUserDataAsync(userData);
         }
     }
 }
