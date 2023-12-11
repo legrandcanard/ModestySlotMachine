@@ -56,11 +56,10 @@ class Reel {
 
         newSymbol.classList.remove("show");
         this.#symbolsContainer.prepend(newSymbol);
-
-        newSymbol.classList.remove("show");
+        
         setTimeout(() => {
             newSymbol.classList.add("show");
-        }, 10);
+        }, 100);
 
         let currentSymbolIndex = this.#loopIndex(this.#nextSymbolIndex, this.#playlineOffset, this.#originalSymbolNodes.length);
         

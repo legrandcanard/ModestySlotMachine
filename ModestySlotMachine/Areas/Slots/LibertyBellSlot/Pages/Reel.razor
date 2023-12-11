@@ -10,6 +10,10 @@
         {
             <li class="reel-symbol show reel-symbol-@(symbol.ToString())" data-symbol="@symbol.ToString()"></li>
         }
+        @foreach (var symbol in Enum.GetValues<LibertyBellSymbols>())
+        {
+            <li class="reel-symbol show reel-symbol-@(symbol.ToString())" data-symbol="@symbol.ToString()"></li>
+        }
     </ul>
     <div class="border-fade-top"></div>
     <div class="border-fade-bottom"></div>
