@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services;
+using ModestySlotMachine.Core.Audio;
 using ModestySlotMachine.Core.Entities;
 using ModestySlotMachine.Core.Repositories;
 using ModestySlotMachine.Core.Services;
@@ -29,13 +30,14 @@ namespace ModestySlotMachine
             builder.Logging.AddDebug();
 #endif
 
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddSingleton<MsmAudioPlayer>();
+
             builder.Services.AddTransient<LibertyBellSlotService>();
             builder.Services.AddTransient<LibertyBellAudioService>();
 
             builder.Services.AddTransient<IUserDataRepository, LocalUserDataRepository>();
             builder.Services.AddTransient<UserDataService>();
-
-            builder.Services.AddSingleton(AudioManager.Current);
 
             InitApp(builder.Services.BuildServiceProvider()).ConfigureAwait(false);
 

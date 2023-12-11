@@ -99,6 +99,24 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream reel_spin_fx {
+            get {
+                return ResourceManager.GetStream("reel_spin_fx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream reel_stop_fx {
+            get {
+                return ResourceManager.GetStream("reel_stop_fx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream sick_hybrid_arcade_tone_coin_hit {
             get {
                 return ResourceManager.GetStream("sick_hybrid_arcade_tone_coin_hit", resourceCulture);

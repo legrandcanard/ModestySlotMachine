@@ -7,7 +7,7 @@
 @using static ModestySlotMachine.Slots.LibertyBell.LibertyBellSlotMachine;
 
 @inject LibertyBellSlotService LibertyBellSlotService
-@inject LibertyBellAudioService LibertyBellAudioService
+@inject LibertyBellAudioService AudioService
 @inject UserDataService UserDataService
 @inject ILogger<LibertyBellSlot> Logger
 @inject IJSRuntime JSRuntime
@@ -114,9 +114,9 @@
     {
         if (firstRender)
         {
-            LibertyBellAudioService.MusicVolume = userData.UserSettings.SoundVolume;
-            LibertyBellAudioService.FxSoundVolume = userData.UserSettings.FxSoundVolume;
-            LibertyBellAudioService.PlayBackgroundMusic();
+            AudioService.MusicVolume = userData.UserSettings.SoundVolume;
+            AudioService.FxSoundVolume = userData.UserSettings.FxSoundVolume;
+            AudioService.PlayBackgroundMusic();
         }
 
         base.OnAfterRender(firstRender);
@@ -124,7 +124,7 @@
 
     public void Dispose()
     {
-        LibertyBellAudioService.StopBackgroundMusic();
+        AudioService.StopAll();
     }
 
     async Task MakeSpinAsync()
@@ -132,13 +132,17 @@
         winCombination = null;
         var results = machine.GetSpinResults();
 
+        AudioService.PlayReelSpinSound();
+
         isSpinning = true;
         await Task.WhenAll(
-            reel1.SpinAsync(results[0], reel1SpinDuration),
-            reel2.SpinAsync(results[1], reel2SpinDuration),
-            reel3.SpinAsync(results[2], reel3SpinDuration)
+            reel1.SpinAsync(results[0], reel1SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound()),
+            reel2.SpinAsync(results[1], reel2SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound()),
+            reel3.SpinAsync(results[2], reel3SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound())
         );
         isSpinning = false;
+
+        AudioService.StopReelSpinSound();
 
         if (machine.HasPayout(out Payout<LibertyBellSymbols> result)/*  || true */)
         {
@@ -147,9 +151,9 @@
             reel3.DisplayWinComboStatusAsync();
 
             await Task.Delay(400);
-            LibertyBellAudioService.PlayBigWinSound();
+            AudioService.PlayBigWinSound();
             await Task.Delay(1000);
-            LibertyBellAudioService.PlayConisFallSound();
+            AudioService.PlayConisFallSound();
 
             // userData.Balance += result?.Reward ?? 1;
             userData.Balance += result.Reward;

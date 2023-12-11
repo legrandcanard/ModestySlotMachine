@@ -1,0 +1,61 @@
+﻿
+.audio-player {
+    width: 20rem;
+    height: 5rem;
+    background: #ebe4d15e;
+    backdrop-filter: blur(8px);
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.title-wrapper {
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 190px;
+    height: 1.2rem;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+}
+
+.title {
+
+}
+
+input[type=range]::-webkit-slider-thumb {
+    background: #E55604;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: #26577C;
+}
+
+.btn-icon {
+    padding: 0;
+    color: #26577C;
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+}
+
+    .btn-icon:hover {
+        color: #225073;
+    }
+
+    .btn-icon.btn:active, .btn-icon.btn:focus {
+        outline: none !important;
+        box-shadow: none;
+        color: #1c415d;
+    }
+
+    .btn-icon span {
+        position: relative;
+        top: -0.55rem;
+        left: -0.1rem;
+    }

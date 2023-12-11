@@ -130,6 +130,12 @@
   <data name="fairy_arcade_sparkle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\Raw\fairy-arcade-sparkle.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="reel_spin_fx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>FxSounds\reel-spin-fx.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="reel_stop_fx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>FxSounds\reel-stop-fx.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="sick_hybrid_arcade_tone_coin_hit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\Resources\Raw\sick-hybrid-arcade-tone-coin-hit.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

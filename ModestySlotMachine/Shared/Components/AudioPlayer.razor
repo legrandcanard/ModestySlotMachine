@@ -1,0 +1,114 @@
+﻿@using ModestySlotMachine.Core.Audio
+@using System.Timers
+
+@inject MsmAudioPlayer Player
+
+<div class="audio-player">
+    <a role="button" class="btn btn-icon" @onclick="OnPrevious">
+        <span class="mdi mdi-skip-previous-circle"></span>
+    </a>
+    @if (isPlaying)
+    {
+        <a role="button" class="btn btn-icon" @onclick="OnPause">
+            <span class="mdi mdi-pause-circle"></span>
+        </a>
+    }
+    else
+    {
+        <a role="button" class="btn btn-icon" @onclick="OnPlay">
+            <span class="mdi mdi-play-circle"></span>
+        </a>
+    }
+    <a role="button" class="btn btn-icon" @onclick="OnNext">
+        <span class="mdi mdi-skip-next-circle"></span>
+    </a>
+    <div class="title-wrapper">
+    <span class="title">@Player.CurrentTrack?.Name</span>
+    </div>
+    <input class="form-range" type="range"
+        value="@currentPosition"
+        @oninput="OnChangeTrackPosition"
+        min="0" max="@Player.CurrentTrackHandler?.Duration" />
+</div>
+
+@implements IDisposable
+@code {
+    double currentPosition;
+    Timer updateTimer;
+    bool isPlaying = false;
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Player.TrackPlay += OnTrackPlay;
+        Player.TrackPause += OnTrackPause;
+        isPlaying = Player.IsPlaying;
+
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            currentPosition = 0;
+            updateTimer = new Timer();
+            updateTimer.Interval = 1000;
+            updateTimer.Elapsed += async (object? sender, ElapsedEventArgs args) =>
+            {
+                currentPosition = Player.TrackCurrentPosition;
+                await InvokeAsync(StateHasChanged);
+            };
+            updateTimer.Enabled = true;
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+    void OnTrackPlay(object sender, EventArgs e)
+    {
+        isPlaying = true;
+        updateTimer?.Start();
+    }
+
+    void OnTrackPause(object sender, EventArgs e)
+    {
+        isPlaying = false;
+        updateTimer.Stop();
+    }
+
+    void OnChangeTrackPosition(ChangeEventArgs args)
+    {
+        var newPosition = double.Parse(args.Value as string);
+        currentPosition = newPosition;
+        Player.CurrentTrackHandler.Seek(newPosition);
+    }
+
+    void OnNext()
+    {
+        Player.PlayNextTrack();
+    }
+
+    void OnPrevious()
+    {
+        Player.PlayPreviousTrack();
+    }
+
+    void OnPlay()
+    {
+        Player.Play();
+    }
+
+    void OnPause()
+    {
+        Player.Pause();
+    }
+
+    public void Dispose()
+    {
+        updateTimer.Stop();
+        updateTimer.Dispose();
+
+        Player.TrackPlay -= OnTrackPlay;
+        Player.TrackPause -= OnTrackPause;
+    }
+}

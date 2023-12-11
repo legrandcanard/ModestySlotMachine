@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services.Music
+namespace ModestySlotMachine.Core.Audio
 {
-    internal class Playlist
+    public interface IAudioService
     {
     }
 }

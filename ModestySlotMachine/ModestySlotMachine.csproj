@@ -59,15 +59,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Areas\Slots\LibertyBellSlot\Resources\Music\" />
       <Folder Include="Resources\Raw\Music\" />
       <Folder Include="wwwroot\libs\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\cowboy-sunset-music-4274.mp3" />
-      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\cowboy39s-sundown-country-ballad-623.mp3" />
-      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\in-the-saloon-116225.mp3" />
-      <MauiAsset Include="Areas\Slots\LibertyBellSlot\Resources\Raw\little-adventure-95822.mp3" />
     </ItemGroup>
 
     <ItemGroup>

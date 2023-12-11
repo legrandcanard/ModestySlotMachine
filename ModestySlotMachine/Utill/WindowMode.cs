@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Maui;
+#if WINDOWS
 using Microsoft.UI.Windowing;
+#endif
 
 namespace ModestySlotMachine.Utill
 {

@@ -119,15 +119,15 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cowboy39s_sundown_country_ballad_623" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Raw\cowboy39s-sundown-country-ballad-623.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Music\cowboy39s-sundown-country-ballad-623.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cowboy_sunset_music_4274" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Raw\cowboy-sunset-music-4274.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Music\cowboy-sunset-music-4274.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="in_the_saloon_116225" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Raw\in-the-saloon-116225.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Music\in-the-saloon-116225.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="little_adventure_95822" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Raw\little-adventure-95822.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Music\little-adventure-95822.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
