@@ -163,7 +163,7 @@
 
         AudioService.StopReelSpinSound();
 
-        if (machine.HasPayout(out Payout<LibertyBellSymbols> result)/*  || true */)
+        if (machine.HasPayout(out Payout<LibertyBellSymbols> result) /* || true */)
         {
             reel1.DisplayWinComboStatusAsync();
             reel2.DisplayWinComboStatusAsync();

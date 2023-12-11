@@ -37,7 +37,7 @@ class Reel {
     }
 
     displayWin() {
-        this.#getActualReelSymbols()[this.#originalSymbolNodes.length - this.#playlineOffset + 1].classList.add("scale-up-center");
+        this.#getActualReelSymbols()[this.#playlineOffset - 1].classList.add("scale-up-center");
     }
 
     stopWinDisplay() {
