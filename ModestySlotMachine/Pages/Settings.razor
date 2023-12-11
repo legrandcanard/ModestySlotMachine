@@ -3,6 +3,7 @@
 @using ModestySlotMachine.Core.Services
 @using ModestySlotMachine.Resources
 @using ModestySlotMachine.Utill
+@using System.Globalization
 
 @inject UserDataService UserDataService
 
@@ -15,8 +16,8 @@
             <label class="form-label" for="musicVolume"><span class="mdi mdi-volume-high"></span> Music</label>
             <input class="form-range" type="range" id="musicVolume"
                    min="0" max="1" step="0.05"
-                   value="@userData?.UserSettings?.SoundVolume"
-                   @onchange="e => SetMusicVolume(double.Parse((string)e.Value))" />
+                   value="@userData?.UserSettings.SoundVolume.ToString(CultureInfo.InvariantCulture)"
+                   @onchange="e => SetMusicVolume(double.Parse((string)e.Value, CultureInfo.InvariantCulture))" />
         </div>
     </div>
     <div class="row">
@@ -24,8 +25,8 @@
             <label class="form-label" for="fxSoundVolume"><span class="mdi mdi-volume-high"></span> Sound effects</label>
             <input class="form-range" type="range" id="fxSoundVolume"
                    min="0" max="1" step="0.05"
-                   value="@userData?.UserSettings?.FxSoundVolume"
-                   @onchange="e => SetFxSoundVolume(double.Parse((string)e.Value))" />
+                   value="@userData?.UserSettings.FxSoundVolume.ToString(CultureInfo.InvariantCulture)"
+                   @onchange="e => SetFxSoundVolume(double.Parse((string)e.Value, CultureInfo.InvariantCulture))" />
         </div>
     </div>
     <div class="row mt-3">

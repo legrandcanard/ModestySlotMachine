@@ -94,6 +94,8 @@
     private Payout<LibertyBellSymbols>[] payouts;
     private Payout<LibertyBellSymbols> winCombination;
 
+    private CancellationTokenSource cts = new CancellationTokenSource();
+
     public override async Task SetParametersAsync(ParameterView parameters)
     {
         reelValues = new LibertyBellSymbols[3];
@@ -107,6 +109,9 @@
     {
         userData = await UserDataService.GetUserDataAsync();
 
+        AudioService.MusicVolume = userData.UserSettings.SoundVolume;
+        AudioService.Volume = userData.UserSettings.FxSoundVolume;
+
         await base.OnParametersSetAsync();
     }
 
@@ -114,9 +119,11 @@
     {
         if (firstRender)
         {
-            AudioService.MusicVolume = userData.UserSettings.SoundVolume;
-            AudioService.FxSoundVolume = userData.UserSettings.FxSoundVolume;
-            AudioService.PlayBackgroundMusic();
+            Task.Delay(2000, cts.Token).ContinueWith(task =>
+            {
+                if (!task.IsCanceled)
+                    AudioService.PlayBackgroundMusic();
+            });
         }
 
         base.OnAfterRender(firstRender);
@@ -124,7 +131,8 @@
 
     public void Dispose()
     {
-        AudioService.StopAll();
+        cts.Cancel();
+        AudioService.StopAll();        
     }
 
     async Task MakeSpinAsync()
@@ -136,9 +144,20 @@
 
         isSpinning = true;
         await Task.WhenAll(
-            reel1.SpinAsync(results[0], reel1SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound()),
-            reel2.SpinAsync(results[1], reel2SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound()),
-            reel3.SpinAsync(results[2], reel3SpinDuration).ContinueWith(_ => AudioService.PlayReelStopSound())
+            reel1.SpinAsync(results[0], reel1SpinDuration).ContinueWith(task => {
+                if (!task.IsCanceled)
+                    AudioService.PlayReelStopSound();
+            }, cts.Token),
+            reel2.SpinAsync(results[1], reel2SpinDuration).ContinueWith(task =>
+            {
+                if (!task.IsCanceled)
+                    AudioService.PlayReelStopSound();
+            }, cts.Token),
+            reel3.SpinAsync(results[2], reel3SpinDuration).ContinueWith(task =>
+            {
+                if (!task.IsCanceled)
+                    AudioService.PlayReelStopSound();
+            }, cts.Token)
         );
         isSpinning = false;
 

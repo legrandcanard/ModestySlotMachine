@@ -17,7 +17,6 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
         private readonly IAudioManager _audioManager;
         private MsmAudioPlayer _backgroundMusicPlayer;
 
-        public double FxSoundVolume { get; set; } = 0.5;
         public double MusicVolume { get; set; } = 0.5;
 
         //Cached players
@@ -81,7 +80,7 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
             if (_fxReelSpinSoundAudioPlayer == null)
             {
                 _fxReelSpinSoundAudioPlayer = _audioManager.CreatePlayer(FxSounds.reel_spin_fx);
-                _fxReelSpinSoundAudioPlayer.Volume = FxSoundVolume;
+                _fxReelSpinSoundAudioPlayer.Volume = Volume;
                 _fxReelSpinSoundAudioPlayer.Loop = true;
             }
             _fxReelSpinSoundAudioPlayer.Play();
@@ -101,11 +100,6 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
         {
             _backgroundMusicPlayer.Volume = MusicVolume;
             _backgroundMusicPlayer.Play();
-        }
-
-        public void PlayNextBackgroundTrack()
-        {
-
         }
 
         public void StopBackgroundMusic()

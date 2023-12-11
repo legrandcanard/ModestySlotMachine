@@ -1,5 +1,6 @@
 ﻿@using ModestySlotMachine.Core.Audio
 @using System.Timers
+@using System.Globalization
 
 @inject MsmAudioPlayer Player
 
@@ -26,9 +27,9 @@
     <span class="title">@Player.CurrentTrack?.Name</span>
     </div>
     <input class="form-range" type="range"
-        value="@currentPosition"
+        value="@currentPosition.ToString(CultureInfo.InvariantCulture)"
         @oninput="OnChangeTrackPosition"
-        min="0" max="@Player.CurrentTrackHandler?.Duration" />
+        min="0" max="@Player.CurrentTrackHandler?.Duration.ToString(CultureInfo.InvariantCulture)" />
 </div>
 
 @implements IDisposable
@@ -78,7 +79,7 @@
 
     void OnChangeTrackPosition(ChangeEventArgs args)
     {
-        var newPosition = double.Parse(args.Value as string);
+        var newPosition = double.Parse(args.Value as string, CultureInfo.InvariantCulture);
         currentPosition = newPosition;
         Player.CurrentTrackHandler.Seek(newPosition);
     }
