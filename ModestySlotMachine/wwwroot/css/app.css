@@ -1,6 +1,11 @@
 ﻿/*@import url('mdi/font/css/open-iconic-bootstrap.min.css');*/
 @import url('@mdi/font/css/materialdesignicons.min.css');
 
+@font-face {
+    font-family: 'KismetNF';
+    src: url('../fonts/kismet-normal/KismetNF.ttf') format('truetype');
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

@@ -40,8 +40,6 @@
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
-        Player.TrackPlay += OnTrackPlay;
-        Player.TrackPause += OnTrackPause;
         isPlaying = Player.IsPlaying;
 
         return base.SetParametersAsync(parameters);
@@ -60,6 +58,9 @@
                 await InvokeAsync(StateHasChanged);
             };
             updateTimer.Enabled = true;
+
+            Player.TrackPlay += OnTrackPlay;
+            Player.TrackPause += OnTrackPause;
         }
 
         base.OnAfterRender(firstRender);
@@ -68,7 +69,7 @@
     void OnTrackPlay(object sender, EventArgs e)
     {
         isPlaying = true;
-        updateTimer?.Start();
+        updateTimer.Start();
     }
 
     void OnTrackPause(object sender, EventArgs e)
@@ -106,10 +107,11 @@
 
     public void Dispose()
     {
-        updateTimer.Stop();
-        updateTimer.Dispose();
-
         Player.TrackPlay -= OnTrackPlay;
         Player.TrackPause -= OnTrackPause;
+
+        updateTimer.Stop();
+        updateTimer.Dispose();
+        updateTimer = null;
     }
 }

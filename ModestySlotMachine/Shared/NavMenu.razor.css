@@ -8,7 +8,14 @@
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    font-family: 'KismetNF';
+    color: #EBE4D1;
+}
+
+.brand-container {
+    justify-content: center;
+    gap: 10px;
 }
 
 .mdi {
