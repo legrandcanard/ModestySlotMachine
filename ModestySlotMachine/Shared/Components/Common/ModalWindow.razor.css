@@ -1,0 +1,14 @@
+﻿
+.modal {
+    opacity: 0;
+}
+
+    .modal.show {
+        display: block;
+        opacity: 1;
+    }
+
+    .modal .modal-header {
+        background: var(--primary-color);
+        color: var(--special-text-color);
+    }

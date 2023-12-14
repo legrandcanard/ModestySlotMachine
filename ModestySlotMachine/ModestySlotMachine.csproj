@@ -94,6 +94,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Shared\Components\Common\ModalWindow.razor.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Shared\Components\Common\ModalWindow.razor.css" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Plugin.Maui.Audio" Version="2.1.0" />
     </ItemGroup>

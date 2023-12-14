@@ -1,9 +1,12 @@
 ﻿@using Microsoft.Extensions.Logging;
 @using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services;
-@using ModestySlotMachine.Common.Utill;
+@using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Util
+@using ModestySlotMachine.Common.Util;
 @using ModestySlotMachine.Core.Entities;
 @using ModestySlotMachine.Core.Services;
+@using ModestySlotMachine.Shared.Components
 @using ModestySlotMachine.Slots.LibertyBell;
+@using System.Globalization
 @using static ModestySlotMachine.Slots.LibertyBell.LibertyBellSlotMachine;
 
 @inject LibertyBellSlotService LibertyBellSlotService
@@ -27,12 +30,31 @@
             </div>
         </div>
         <div class="controls">
-            <button type="button" class="btn btn-pull mb-3" @onclick="MakeSpinAsync" disabled="@(isSpinning ? "disabled" : null)">
-                <i class="bi bi-arrow-repeat"></i> Pull
-            </button>
+            <div class="container mb-3">
+                <input @bind="isInfiniteSpinModeActive"
+                       type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+                <label class="btn btn-repeat" for="btn-check">
+                    @if (isInfiniteSpinModeActive)
+                    {
+                        <span class="mdi mdi-repeat"></span>
+                    }
+                    else
+                    {
+                        <span class="mdi mdi-repeat-off"></span>
+                    }
+                </label>
+                <button type="button" class="btn btn-pull" @onclick="OnSpinBtnClickAsync" disabled="@(isSpinning ? "disabled" : null)">
+                    Pull
+                </button>
+            </div>
             <div class="balance-wrapper">
                 <div class="balance">
-                    @userData?.Balance.ToString("C", Cultures.EnUs)
+                    @string.Format(new LibertyBellCurrencyFormatPrivider(), "{0}", userData?.Balance)
+                </div>
+            </div>
+            <div class="balance-wrapper">
+                <div class="balance">
+                    @string.Format(new LibertyBellCurrencyFormatPrivider(), "{0}", bet)
                 </div>
             </div>
             <div class="payout-chart-wrapper">
@@ -51,7 +73,7 @@
                                     }
                                 }
                             </td>
-                            <td>¢@payout.Reward</td>
+                            <td>x @payout.Reward</td>
                         </tr>
                     }
                 </table>
@@ -70,7 +92,7 @@
                                     }
                                 }
                             </td>
-                            <td>¢@payout.Reward</td>
+                            <td>x @payout.Reward</td>
                         </tr>
                     }
                 </table>
@@ -79,12 +101,14 @@
         </div>
     </div>
 </div>
+<BalanceManagementModal @ref="balanceManagementModal"></BalanceManagementModal>
 
 @implements IDisposable
 
 @code {
     private UserData userData;
     private Reel reel1, reel2, reel3;
+    private BalanceManagementModal balanceManagementModal;
     private uint reel1SpinDuration = 1000,
         reel2SpinDuration = 2000,
         reel3SpinDuration = 4000;
@@ -93,6 +117,8 @@
     private bool isSpinning = false;
     private Payout<LibertyBellSymbols>[] payouts;
     private Payout<LibertyBellSymbols> winCombination;
+    private decimal bet = 0.01m;
+    private bool isInfiniteSpinModeActive;
 
     private CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -135,8 +161,29 @@
         AudioService.StopAll();        
     }
 
+    async Task OnSpinBtnClickAsync()
+    {
+        do
+        {
+            if (!IsGameAvailable())
+            {
+                balanceManagementModal.Show();
+                StateHasChanged();
+                return;
+            }
+
+            await MakeSpinAsync();
+            await Task.Delay(500);
+        }
+        while (isInfiniteSpinModeActive);
+    }
+
     async Task MakeSpinAsync()
     {
+        userData.Balance -= bet;
+        StateHasChanged();
+        await UserDataService.SaveUserDataAsync(userData);
+
         winCombination = null;
         var results = machine.GetSpinResults();
 
@@ -175,10 +222,16 @@
             AudioService.PlayConisFallSound();
 
             // userData.Balance += result?.Reward ?? 1;
-            userData.Balance += result.Reward;
+            userData.Balance += result.Reward * bet;
+            StateHasChanged();
 
             await UserDataService.SaveUserDataAsync(userData);
         }
+    }
+
+    bool IsGameAvailable()
+    {
+        return userData?.Balance >= bet;
     }
 }
 

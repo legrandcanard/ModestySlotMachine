@@ -2,7 +2,7 @@
 @using ModestySlotMachine.Core.Entities
 @using ModestySlotMachine.Core.Services
 @using ModestySlotMachine.Resources
-@using ModestySlotMachine.Utill
+@using ModestySlotMachine.Util
 @using System.Globalization
 
 @inject UserDataService UserDataService
@@ -80,9 +80,3 @@
         await UserDataService.SaveUserDataAsync(userData);
     }
 }
-
-<style>
-    main {
-        background: #E3DBDB;
-    }
-</style>

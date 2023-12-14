@@ -1,0 +1,42 @@
+﻿<div id="balanceManagementModal" class="modal fade @(show ? "show" : "")">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button @onclick="Hide" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Content
+            </div>
+            @if (Actions != null)
+            {
+            <div class="modal-footer">
+                @Actions
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment Title { get; set; }
+    [Parameter] public RenderFragment Content { get; set; }
+    [Parameter] public RenderFragment Actions { get; set; }
+
+    private string animation = string.Empty;
+    private bool show;
+
+    public void Show()
+    {
+        show = true;
+        animation = "fade-zoom-in";
+        StateHasChanged();
+    }
+
+    public void Hide()
+    {
+        show = false;
+        animation = string.Empty;
+        StateHasChanged();
+    }
+}

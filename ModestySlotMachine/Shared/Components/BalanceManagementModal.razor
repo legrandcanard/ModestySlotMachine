@@ -1,0 +1,39 @@
+﻿@using ModestySlotMachine.Common.Util
+@using ModestySlotMachine.Core.Entities
+@using ModestySlotMachine.Core.Services
+@using ModestySlotMachine.Shared.Components.Common
+
+@inject UserDataService UserDataService
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+
+<ModalWindow @ref="modalWindow">
+    <Title>Insufficient funds</Title>
+    <Content>
+        <p>Check your available balance and try again.</p>
+        <p>Your available balance: <strong>@userData?.Balance.ToString("C", Cultures.EnUs)</strong></p>
+    </Content>
+    <Actions>
+        <button @onclick="NavigateToBalancePage" type="button" class="btn btn-primary">Go to funding page</button>
+    </Actions>
+</ModalWindow>
+
+@code {
+    private ModalWindow modalWindow;
+    private UserData userData;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        userData = await UserDataService.GetUserDataAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    public void NavigateToBalancePage()
+    {
+        NavManager.NavigateTo("/balance");
+    }
+
+    public void Show() => modalWindow.Show();
+
+    public void Hide() => modalWindow.Hide();
+}

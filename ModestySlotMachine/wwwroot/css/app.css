@@ -6,6 +6,11 @@
     src: url('../fonts/kismet-normal/KismetNF.ttf') format('truetype');
 }
 
+:root {
+    --primary-color: #7D1D3F;
+    --special-text-color: #EBE4D1;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -37,7 +42,7 @@ a, .btn-link {
 }
 
 .validation-message {
-    color: red;
+    color: #7D1D3F;
 }
 
 #blazor-error-ui {
@@ -88,3 +93,27 @@ a, .btn-link {
         padding-left: env(safe-area-inset-left);
     }
 }
+
+main {
+    background: #E3DBDB;
+}
+
+.btn-icon {
+    padding: 0;
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+}
+
+    .btn-icon.btn:active, .btn-icon.btn:focus {
+        outline: none !important;
+        box-shadow: none;
+        color: #1c415d;
+    }
+
+    .btn-icon span {
+        position: relative;
+        top: -0.55rem;
+        left: -0.1rem;
+    }

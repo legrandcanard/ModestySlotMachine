@@ -1,7 +1,7 @@
 ﻿
 using System.Globalization;
 
-namespace ModestySlotMachine.Common.Utill
+namespace ModestySlotMachine.Common.Util
 {
     public static class Cultures
     {

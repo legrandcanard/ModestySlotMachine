@@ -1,0 +1,62 @@
+﻿@page "/balance"
+@using ModestySlotMachine.Common.Util
+@using ModestySlotMachine.Core.Entities
+@using ModestySlotMachine.Core.Services
+
+@inject UserDataService UserDataService
+
+<h3 class="fw-bold mb-3">Balance</h3>
+<p>Available balance: <strong>@userData?.Balance.ToString("C", Cultures.EnUs)</strong></p>
+<div class="row">
+    <div class="col-xxl-3 col-xl-5 col-12">
+        <label for="depositAmount"><span class="mdi mdi-arrow-down"></span> Enter the deposit amount down below</label>
+        <div class="input-group mt-2">
+            <span class="input-group-text">$</span>
+            <input @bind="depositAmount" id="depositAmount" type="number" class="form-control" />
+            <button @onclick="DepositAsync" type="button" class="btn btn-primary">Deposit</button>
+        </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-xxl-6 col-xl-8 col-12">
+        <div class="alert alert-warning" role="alert">
+            <p>
+                All presened funds are fictional and only servre immersion purpuses only. 
+                <br />
+                Funds cannot be withdrawn to or transferred from any real bank account.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xxl-6 col-xl-8 col-12">
+        <div class="alert alert-info" role="alert">
+            <p>
+                You can reduce the amount of funds by entering a negative number in the deposit field.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private decimal depositAmount = 0;
+    private UserData userData;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        userData = await UserDataService.GetUserDataAsync();
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task DepositAsync()
+    {
+        if (depositAmount == default)
+            return;
+
+        userData.Balance += depositAmount;
+        userData.Balance = userData.Balance < 0 ? 0 : userData.Balance;
+        await UserDataService.SaveUserDataAsync(userData);
+        StateHasChanged();
+        depositAmount = 0;
+    }
+}
