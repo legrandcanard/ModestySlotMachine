@@ -43,6 +43,7 @@ namespace ModestySlotMachine.Core.Audio
 
         public event EventHandler TrackPlay;
         public event EventHandler TrackPause;
+        public event EventHandler<TrackEventArgs> TrackChange;
 
         public MsmAudioPlayer(IAudioManager audioManager) : base(audioManager) { }
 
@@ -93,6 +94,7 @@ namespace ModestySlotMachine.Core.Audio
                 nextTrackIndex = 0;
 
             InitTrackByIndex(nextTrackIndex);
+            TrackChange?.Invoke(this, new TrackEventArgs { Track = CurrentTrack, Index = nextTrackIndex });
             Play();
         }
 

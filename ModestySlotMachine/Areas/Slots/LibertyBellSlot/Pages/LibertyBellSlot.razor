@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="controls">
-            <div class="container mb-3">
+            <div class="container mb-4">
                 <input @bind="isInfiniteSpinModeActive"
                        type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
                 <label class="btn btn-repeat" for="btn-check">
@@ -49,12 +49,16 @@
             </div>
             <div class="balance-wrapper">
                 <div class="balance">
+                    <small class="balance-label">Balance</small>
                     @string.Format(new LibertyBellCurrencyFormatPrivider(), "{0}", userData?.Balance)
                 </div>
             </div>
-            <div class="balance-wrapper">
+            <div class="balance-wrapper balance-bet-wrapper">
                 <div class="balance">
+                    <small class="balance-label">Bet</small>
+                    <button @onclick="() => ChangeBet(-BetChangeStep)" type="button" class="btn btn-icon"><span class="mdi mdi-arrow-left-thick"></span></button>
                     @string.Format(new LibertyBellCurrencyFormatPrivider(), "{0}", bet)
+                    <button @onclick="() => ChangeBet(BetChangeStep)" type="button" class="btn btn-icon"><span class="mdi mdi-arrow-right-thick"></span></button>
                 </div>
             </div>
             <div class="payout-chart-wrapper">
@@ -106,6 +110,8 @@
 @implements IDisposable
 
 @code {
+    private const string GameSettingsKey = "libertyBellSlot";
+    private const string GameSettingsBetKey = GameSettingsKey + "Bet";
     private UserData userData;
     private Reel reel1, reel2, reel3;
     private BalanceManagementModal balanceManagementModal;
@@ -117,7 +123,10 @@
     private bool isSpinning = false;
     private Payout<LibertyBellSymbols>[] payouts;
     private Payout<LibertyBellSymbols> winCombination;
-    private decimal bet = 0.01m;
+    private decimal bet = MinBet;
+    private const decimal MinBet = 0.01m;
+    private const decimal MaxBet = 3m;
+    private const decimal BetChangeStep = 0.01m;
     private bool isInfiniteSpinModeActive;
 
     private CancellationTokenSource cts = new CancellationTokenSource();
@@ -137,6 +146,9 @@
 
         AudioService.MusicVolume = userData.UserSettings.SoundVolume;
         AudioService.Volume = userData.UserSettings.FxSoundVolume;
+
+        if (userData.GameRelatedSettings.ContainsKey(GameSettingsBetKey))
+            bet = Convert.ToDecimal(userData.GameRelatedSettings[GameSettingsBetKey]);
 
         await base.OnParametersSetAsync();
     }
@@ -232,6 +244,18 @@
     bool IsGameAvailable()
     {
         return userData?.Balance >= bet;
+    }
+
+    void ChangeBet(decimal value)
+    {
+        bet += value;
+        if (bet < MinBet)
+            bet = MinBet;
+        if (bet > MaxBet)
+            bet = MaxBet;
+
+        userData.GameRelatedSettings[GameSettingsBetKey] = bet.ToString(CultureInfo.InvariantCulture);
+        UserDataService.SaveUserDataAsync(userData);
     }
 }
 

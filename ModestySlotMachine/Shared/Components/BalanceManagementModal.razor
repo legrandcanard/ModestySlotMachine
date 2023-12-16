@@ -33,7 +33,10 @@
         NavManager.NavigateTo("/balance");
     }
 
-    public void Show() => modalWindow.Show();
+    public async Task Show() {
+        userData = await UserDataService.GetUserDataAsync();
+        modalWindow.Show();
+    }
 
     public void Hide() => modalWindow.Hide();
 }

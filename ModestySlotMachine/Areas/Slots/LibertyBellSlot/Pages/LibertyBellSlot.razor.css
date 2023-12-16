@@ -23,6 +23,7 @@
     border-radius: 30px;
     border: 15px solid #9F7219;
     --border-color: #9F7219;
+    --text-color-2: #ffc850;
 }
 
 .component {
@@ -45,8 +46,7 @@
     font-family: 'InstrumentSerif';
     padding: 10px;
     text-align: center;
-    color: #ffc850;
-    /*background: #97584c;*/
+    color: var(--text-color-2);
     border-radius: 7px;
     text-shadow: #474747 3px 5px 2px;
 }
@@ -107,13 +107,13 @@
     height: 150px;
     position: absolute;
     top: 150px;
-    border: 8px solid #ffc850;
+    border: 8px solid var(--text-color-2);
     border-radius: 10px;
     z-index: 1;
 }
 
 .btn-pull {
-    background: #ffc850;
+    background: var(--text-color-2);
     padding: 10px 116px;
     border-radius: 10px;
     font-weight: 600;
@@ -122,7 +122,7 @@
 }
 
 .btn-repeat {
-    background: #ffc850;
+    background: var(--text-color-2);
     padding: 3px 9px;
     border-radius: 10px;
 }
@@ -138,9 +138,25 @@
         font-size: 1.5rem;
         background: #b59f78;
         padding: 5px 50px;
+        position: relative;
     }
+
+.balance-bet-wrapper {
+    padding: 5px 10px;
+}
 
 .balance {
     border-radius: 5px;
     font-weight: 600;
+}
+
+.balance-label {
+    position: absolute;
+    top: -1rem;
+    left: 0.5rem;
+    border-radius: 5px;
+    background: #9f7219;
+    padding: 0px 5px;
+    font-size: 1rem;
+    color: var(--text-color-2);
 }
