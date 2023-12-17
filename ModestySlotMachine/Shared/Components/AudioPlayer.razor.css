@@ -59,3 +59,12 @@ input[type=range]::-webkit-slider-runnable-track {
         top: -0.55rem;
         left: -0.1rem;
     }
+
+.progress {
+    height: 3px;
+    background: none;
+}
+
+    .progress .progress-bar {
+        background: #e55604;
+    }

@@ -17,6 +17,7 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
     public class LibertyBellAudioService : AudioPlayerBase, IDisposable
     {
         private const string CurrentTrackSettingsKey = LibertyBellContants.GameSettingsBetKey + "CurrentTrack";
+        private const string CurrentTrackTimeSettingsKey = LibertyBellContants.GameSettingsBetKey + "CurrentTrackTime";
 
         private readonly IAudioManager _audioManager;
         private readonly MsmAudioPlayer _backgroundMusicPlayer;
@@ -40,45 +41,54 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
         {
             var userData = await _userDataService.GetUserDataAsync();
 
-            userData.GameRelatedSettings.TryGetInteger(CurrentTrackSettingsKey, out int trackIndex);
+            userData.GameRelatedSettings.TryGetGuid(CurrentTrackSettingsKey, out Guid trackId);
+            userData.GameRelatedSettings.TryGetDouble(CurrentTrackTimeSettingsKey, out double trackTime);
 
             _backgroundMusicPlayer.Playlist = PlaylistBuilder.Create()
-                .StartWith(trackIndex)
+                .StartWith(trackId)
                 .Next(new Track
                 {
+                    Id = Guid.Parse("00c53c45-d1a4-4eb2-a45f-d802d90fa007"),
                     Name = "little_adventure_95822",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("little_adventure_95822") as byte[]),
                 })
                 .Next(new Track
                 {
+                    Id = Guid.Parse("454b7df6-0c77-4ade-925a-06dfed76c40d"),
                     Name = "in_the_saloon_116225",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("in_the_saloon_116225") as byte[]),
                 })
                 .Next(new Track
                 {
+                    Id = Guid.Parse("2fe6df2e-2927-4550-9cc4-18aec65e5629"),
                     Name = "cowboy39s_sundown_country_ballad_623",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("cowboy39s_sundown_country_ballad_623") as byte[]),
                 })
                 .Next(new Track
                 {
+                    Id = Guid.Parse("380589cd-9753-439a-bd2e-90e66de75b55"),
                     Name = "cowboy_sunset_music_4274",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("cowboy_sunset_music_4274") as byte[]),
                 })
                 .Build();
 
+            _backgroundMusicPlayer.TrackCurrentPosition = trackTime;
             _backgroundMusicPlayer.TrackChange += OnTrackChange;
         }
 
         private void OnTrackChange(object sender, TrackEventArgs e)
         {
-            _userDataService.GetUserDataAsync().ContinueWith(async t =>
-            {
-                var userData = t.Result;
+            _userDataService.GetUserDataAsync().ContinueWith(async _ => await SaveCurrentPlayerState());
+        }
 
-                userData.GameRelatedSettings.AddOrUpdate(CurrentTrackSettingsKey, e.Index);
+        public async Task SaveCurrentPlayerState()
+        {
+            var userData = await _userDataService.GetUserDataAsync();
 
-                await _userDataService.SaveUserDataAsync(userData);
-            });
+            userData.GameRelatedSettings.AddOrUpdate(CurrentTrackSettingsKey, _backgroundMusicPlayer.CurrentTrack.Id);
+            userData.GameRelatedSettings.AddOrUpdate(CurrentTrackTimeSettingsKey, _backgroundMusicPlayer.TrackCurrentPosition);
+
+            await _userDataService.SaveUserDataAsync(userData);
         }
 
         public void StopAll()

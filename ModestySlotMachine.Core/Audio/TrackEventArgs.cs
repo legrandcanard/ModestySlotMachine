@@ -9,6 +9,7 @@ namespace ModestySlotMachine.Core.Audio
     public class TrackEventArgs : EventArgs
     {
         public Track Track { get; set; } = null!;
+        public double TrackTime { get; set; }
         public int Index { get; set; }
     }
 }

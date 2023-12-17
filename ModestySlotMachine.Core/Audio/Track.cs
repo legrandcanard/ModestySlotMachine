@@ -8,7 +8,8 @@ namespace ModestySlotMachine.Core.Audio
 {
     public class Track
     {
-        public required string Name { get; set; }
-        public required Stream AudioStream { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public Stream AudioStream { get; set; }
     }
 }

@@ -169,8 +169,9 @@
 
     public void Dispose()
     {
+        AudioService.SaveCurrentPlayerState();
         cts.Cancel();
-        AudioService.StopAll();        
+        AudioService.StopAll();
     }
 
     async Task OnSpinBtnClickAsync()

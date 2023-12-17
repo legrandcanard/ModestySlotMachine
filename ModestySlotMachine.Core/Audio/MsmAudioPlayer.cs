@@ -13,6 +13,8 @@ namespace ModestySlotMachine.Core.Audio
         public int _currentTrackIndex;
         private Playlist _playlist;
 
+        private CancellationTokenSource _playNextTrackCancellationTokenSource;
+
         public IAudioPlayer CurrentTrackHandler { get; private set; }
         
         public Playlist Playlist
@@ -27,23 +29,36 @@ namespace ModestySlotMachine.Core.Audio
 
         public Track CurrentTrack { get; private set; }
 
-        public bool IsPlaying { get; private set; }
+        public bool IsPlaying => CurrentTrackHandler?.IsPlaying ?? false;
 
-        object _currentTrackHandlerLock = new object();
         public double TrackCurrentPosition
         {
             get
             {
-                lock (_currentTrackHandlerLock)
+                return CurrentTrackHandler?.CurrentPosition ?? default;
+            }
+            set
+            {
+                if (CurrentTrackHandler == null || !CurrentTrackHandler.CanSeek)
+                    return;
+
+                if (_playNextTrackCancellationTokenSource != null)
                 {
-                    return CurrentTrackHandler.CurrentPosition;
+                    // Prevent moving to next track
+                    _playNextTrackCancellationTokenSource.Cancel();
                 }
+
+                CurrentTrackHandler.Seek(value);
             }
         }
 
+        #region Events
         public event EventHandler TrackPlay;
         public event EventHandler TrackPause;
         public event EventHandler<TrackEventArgs> TrackChange;
+        public event EventHandler TrackPlaybackEnd;
+        public event EventHandler PlaylistSet;
+        #endregion
 
         public MsmAudioPlayer(IAudioManager audioManager) : base(audioManager) { }
 
@@ -53,6 +68,8 @@ namespace ModestySlotMachine.Core.Audio
             CurrentTrack = Playlist.Tracks[_currentTrackIndex];
             CurrentTrackHandler = CreatePlayer(CurrentTrack.AudioStream);
             CurrentTrackHandler.PlaybackEnded += OnPlaybackEnded;
+
+            PlaylistSet?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -66,18 +83,25 @@ namespace ModestySlotMachine.Core.Audio
             CurrentTrackHandler.Volume = Volume;
             TrackPlay?.Invoke(this, EventArgs.Empty);
             CurrentTrackHandler.Play();
-            IsPlaying = true;
         }
 
         private void OnPlaybackEnded(object? sender, EventArgs e)
         {
-            Task.Delay(3000).ContinueWith(_ => PlayNextTrack());
+            _playNextTrackCancellationTokenSource = new CancellationTokenSource();
+
+            Task.Delay(3000, _playNextTrackCancellationTokenSource.Token).ContinueWith(t => 
+                { 
+                    if (!t.IsCanceled) 
+                        PlayNextTrack();
+                }, 
+                _playNextTrackCancellationTokenSource.Token);
+
+            TrackPlaybackEnd?.Invoke(this, EventArgs.Empty);
         }
 
         public void Pause()
         {
             CurrentTrackHandler?.Pause();
-            IsPlaying = false;
             TrackPause?.Invoke(this, EventArgs.Empty);
         }
 
@@ -94,7 +118,7 @@ namespace ModestySlotMachine.Core.Audio
                 nextTrackIndex = 0;
 
             InitTrackByIndex(nextTrackIndex);
-            TrackChange?.Invoke(this, new TrackEventArgs { Track = CurrentTrack, Index = nextTrackIndex });
+            TrackChange?.Invoke(this, new TrackEventArgs { Track = CurrentTrack, Index = nextTrackIndex, TrackTime = CurrentTrackHandler.CurrentPosition });
             Play();
         }
 
@@ -111,12 +135,13 @@ namespace ModestySlotMachine.Core.Audio
                 nextTrackIndex = Playlist.Tracks.Count - 1;
             
             InitTrackByIndex(nextTrackIndex);
+            TrackChange?.Invoke(this, new TrackEventArgs { Track = CurrentTrack, Index = nextTrackIndex, TrackTime = CurrentTrackHandler.CurrentPosition });
             Play();
         }
 
         private void InitTrackByIndex(int nextTrackIndex)
         {
-            lock (_currentTrackHandlerLock)
+            //lock (_currentTrackHandlerLock)
             {
                 try
                 {
@@ -128,7 +153,9 @@ namespace ModestySlotMachine.Core.Audio
                     CurrentTrack.AudioStream.CopyTo(newStream);
                     CurrentTrack.AudioStream = newStream;
 
-                    CurrentTrackHandler.Dispose();
+                    var handlerRef = CurrentTrackHandler;
+                    CurrentTrackHandler = null!;
+                    handlerRef.Dispose();
 
                     _currentTrackIndex = nextTrackIndex;
                     CurrentTrack = Playlist.Tracks[nextTrackIndex];

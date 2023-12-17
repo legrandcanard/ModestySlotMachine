@@ -9,7 +9,7 @@ namespace ModestySlotMachine.Core.Audio
     public class PlaylistBuilder
     {
         private List<Track> _tracks = new List<Track>();
-        private int _firstIndex;
+        private Guid? _firstTrackId;
 
         public static PlaylistBuilder Create()
         {
@@ -22,15 +22,22 @@ namespace ModestySlotMachine.Core.Audio
             return this;
         }
 
-        public PlaylistBuilder StartWith(int index)
+        public PlaylistBuilder StartWith(Guid? id)
         {
-            _firstIndex = index;
+            if (id.HasValue && Guid.Empty != id.Value)
+                _firstTrackId = id;
             return this;
         }
 
         public Playlist Build()
         {
-            int firstTrackIndex = _firstIndex;
+            if (_firstTrackId == null)
+            {
+                _firstTrackId = _tracks.First().Id;
+            }
+
+            Track firstTrack = _tracks.First(t => t.Id == _firstTrackId);
+            int firstTrackIndex = _tracks.IndexOf(firstTrack);
 
             var firstPart = _tracks.Skip(firstTrackIndex).Take(_tracks.Count - firstTrackIndex).ToArray();
             var secondPart = _tracks.Take(firstTrackIndex).ToArray();

@@ -4,44 +4,54 @@
 
 @inject MsmAudioPlayer Player
 
-<div class="audio-player">
-    <a role="button" class="btn btn-icon" @onclick="OnPrevious">
-        <span class="mdi mdi-skip-previous-circle"></span>
-    </a>
-    @if (isPlaying)
-    {
-        <a role="button" class="btn btn-icon" @onclick="OnPause">
-            <span class="mdi mdi-pause-circle"></span>
+@if (Player.CurrentTrackHandler != null)
+{
+    <div class="audio-player">
+        <a role="button" class="btn btn-icon" @onclick="OnPrevious">
+            <span class="mdi mdi-skip-previous-circle"></span>
         </a>
-    }
-    else
-    {
-        <a role="button" class="btn btn-icon" @onclick="OnPlay">
-            <span class="mdi mdi-play-circle"></span>
+        @if (Player.IsPlaying)
+        {
+            <a role="button" class="btn btn-icon" @onclick="OnPause">
+                <span class="mdi mdi-pause-circle"></span>
+            </a>
+        }
+        else
+        {
+            <a role="button" class="btn btn-icon" @onclick="OnPlay">
+                <span class="mdi mdi-play-circle"></span>
+            </a>
+        }
+        <a role="button" class="btn btn-icon" @onclick="OnNext">
+            <span class="mdi mdi-skip-next-circle"></span>
         </a>
-    }
-    <a role="button" class="btn btn-icon" @onclick="OnNext">
-        <span class="mdi mdi-skip-next-circle"></span>
-    </a>
-    <div class="title-wrapper">
-    <span class="title">@Player.CurrentTrack?.Name</span>
+        <div class="title-wrapper">
+            <span class="title">@Player.CurrentTrack.Name</span>
+        </div>
+        <input class="form-range" type="range"
+            value="@Player.CurrentTrackHandler?.CurrentPosition.ToString(CultureInfo.InvariantCulture)"
+            @oninput="OnChangeTrackPosition"
+            min="0" max="@Player.CurrentTrackHandler?.Duration.ToString(CultureInfo.InvariantCulture)" 
+        />
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="@trackChangeProgress" aria-valuemin="0" aria-valuemax="100" style="width: @(trackChangeProgress)%; transition: width 3s linear;"></div>
+        </div>
     </div>
-    <input class="form-range" type="range"
-        value="@currentPosition.ToString(CultureInfo.InvariantCulture)"
-        @oninput="OnChangeTrackPosition"
-        min="0" max="@Player.CurrentTrackHandler?.Duration.ToString(CultureInfo.InvariantCulture)" />
-</div>
+}
+else
+{
+    <div class="audio-player">
+        Loading...
+    </div>
+}
 
 @implements IDisposable
 @code {
-    double currentPosition;
     Timer updateTimer;
-    bool isPlaying = false;
+    int trackChangeProgress;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
-        isPlaying = Player.IsPlaying;
-
         return base.SetParametersAsync(parameters);
     }
 
@@ -49,18 +59,18 @@
     {
         if (firstRender)
         {
-            currentPosition = 0;
             updateTimer = new Timer();
-            updateTimer.Interval = 1000;
+            updateTimer.Interval = 100;
             updateTimer.Elapsed += async (object? sender, ElapsedEventArgs args) =>
             {
-                currentPosition = Player.TrackCurrentPosition;
                 await InvokeAsync(StateHasChanged);
             };
-            updateTimer.Enabled = true;
 
             Player.TrackPlay += OnTrackPlay;
             Player.TrackPause += OnTrackPause;
+            Player.PlaylistSet += OnPlaylistSet;
+            Player.TrackPlaybackEnd += OnTrackPlaybackEnd;
+            StateHasChanged();
         }
 
         base.OnAfterRender(firstRender);
@@ -68,21 +78,46 @@
 
     void OnTrackPlay(object sender, EventArgs e)
     {
-        isPlaying = true;
+        trackChangeProgress = 0;
         updateTimer.Start();
     }
 
     void OnTrackPause(object sender, EventArgs e)
     {
-        isPlaying = false;
         updateTimer.Stop();
+    }
+
+    void OnPlaylistSet(object sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    void OnTrackPlaybackEnd(object sender, EventArgs e)
+    {
+        trackChangeProgress = 100;
+
+        // int waitTimeSpanMs = 3000;
+        // int increment = 5;
+        // int updateIntervalMs = (int)(((float)increment / 100) *  waitTimeSpanMs);
+        // trackChangeProgress = 0;
+        // Task.Run(async () =>
+        // {
+        //     do
+        //     {
+        //         await Task.Delay(updateIntervalMs);
+        //         trackChangeProgress += 1;
+        //         await InvokeAsync(StateHasChanged);
+        //     }
+        //     while (trackChangeProgress < 100);
+        // });
     }
 
     void OnChangeTrackPosition(ChangeEventArgs args)
     {
         var newPosition = double.Parse(args.Value as string, CultureInfo.InvariantCulture);
-        currentPosition = newPosition;
-        Player.CurrentTrackHandler.Seek(newPosition);
+        Player.TrackCurrentPosition = newPosition;
+        if (!Player.IsPlaying)
+            Player.Play();
     }
 
     void OnNext()
@@ -109,6 +144,7 @@
     {
         Player.TrackPlay -= OnTrackPlay;
         Player.TrackPause -= OnTrackPause;
+        Player.PlaylistSet -= OnPlaylistSet;
 
         updateTimer.Stop();
         updateTimer.Dispose();
