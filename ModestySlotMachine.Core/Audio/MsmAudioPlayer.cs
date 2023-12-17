@@ -49,6 +49,7 @@ namespace ModestySlotMachine.Core.Audio
                 }
 
                 CurrentTrackHandler.Seek(value);
+                TrackPositionChange?.Invoke(this, new TrackEventArgs { Index = _currentTrackIndex, Track = CurrentTrack, TrackTime = value });
             }
         }
 
@@ -56,6 +57,7 @@ namespace ModestySlotMachine.Core.Audio
         public event EventHandler TrackPlay;
         public event EventHandler TrackPause;
         public event EventHandler<TrackEventArgs> TrackChange;
+        public event EventHandler<TrackEventArgs> TrackPositionChange;
         public event EventHandler TrackPlaybackEnd;
         public event EventHandler PlaylistSet;
         #endregion
@@ -141,31 +143,28 @@ namespace ModestySlotMachine.Core.Audio
 
         private void InitTrackByIndex(int nextTrackIndex)
         {
-            //lock (_currentTrackHandlerLock)
+            try
             {
-                try
-                {
-                    CurrentTrackHandler.PlaybackEnded -= OnPlaybackEnded;
-                    CurrentTrackHandler.Stop();
+                CurrentTrackHandler.PlaybackEnded -= OnPlaybackEnded;
+                CurrentTrackHandler.Stop();
 
-                    CurrentTrack.AudioStream.Position = 0;
-                    var newStream = new MemoryStream();
-                    CurrentTrack.AudioStream.CopyTo(newStream);
-                    CurrentTrack.AudioStream = newStream;
+                CurrentTrack.AudioStream.Position = 0;
+                var newStream = new MemoryStream();
+                CurrentTrack.AudioStream.CopyTo(newStream);
+                CurrentTrack.AudioStream = newStream;
 
-                    var handlerRef = CurrentTrackHandler;
-                    CurrentTrackHandler = null!;
-                    handlerRef.Dispose();
+                var handlerRef = CurrentTrackHandler;
+                CurrentTrackHandler = null!;
+                handlerRef.Dispose();
 
-                    _currentTrackIndex = nextTrackIndex;
-                    CurrentTrack = Playlist.Tracks[nextTrackIndex];
-                    CurrentTrackHandler = CreatePlayer(CurrentTrack.AudioStream);
-                    CurrentTrackHandler.PlaybackEnded += OnPlaybackEnded;
-                }
-                catch (Exception ex)
-                {
-                    // COM exception can occur when CurrentTrackHandler.Stop called too soon after it was created
-                }
+                _currentTrackIndex = nextTrackIndex;
+                CurrentTrack = Playlist.Tracks[nextTrackIndex];
+                CurrentTrackHandler = CreatePlayer(CurrentTrack.AudioStream);
+                CurrentTrackHandler.PlaybackEnded += OnPlaybackEnded;
+            }
+            catch (Exception ex)
+            {
+                // COM exception can occur when CurrentTrackHandler.Stop called too soon after it was created
             }
         }
     }

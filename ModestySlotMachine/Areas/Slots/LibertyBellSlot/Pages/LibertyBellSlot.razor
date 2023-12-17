@@ -157,7 +157,7 @@
     {
         if (firstRender)
         {
-            Task.Delay(2000, cts.Token).ContinueWith(task =>
+            Task.Delay(LibertyBellConstants.TracksChangeDelayMs, cts.Token).ContinueWith(task =>
             {
                 if (!task.IsCanceled)
                     AudioService.PlayBackgroundMusic();

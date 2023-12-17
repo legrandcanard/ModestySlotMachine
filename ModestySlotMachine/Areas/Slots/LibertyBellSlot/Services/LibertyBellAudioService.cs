@@ -16,8 +16,8 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
 {
     public class LibertyBellAudioService : AudioPlayerBase, IDisposable
     {
-        private const string CurrentTrackSettingsKey = LibertyBellContants.GameSettingsBetKey + "CurrentTrack";
-        private const string CurrentTrackTimeSettingsKey = LibertyBellContants.GameSettingsBetKey + "CurrentTrackTime";
+        private const string CurrentTrackSettingsKey = LibertyBellConstants.GameSettingsBetKey + "CurrentTrack";
+        private const string CurrentTrackTimeSettingsKey = LibertyBellConstants.GameSettingsBetKey + "CurrentTrackTime";
 
         private readonly IAudioManager _audioManager;
         private readonly MsmAudioPlayer _backgroundMusicPlayer;

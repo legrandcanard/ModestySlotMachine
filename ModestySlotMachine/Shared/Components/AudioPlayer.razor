@@ -1,4 +1,5 @@
-﻿@using ModestySlotMachine.Core.Audio
+﻿@using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Util
+@using ModestySlotMachine.Core.Audio
 @using System.Timers
 @using System.Globalization
 
@@ -29,12 +30,12 @@
             <span class="title">@Player.CurrentTrack.Name</span>
         </div>
         <input class="form-range" type="range"
-            value="@Player.CurrentTrackHandler?.CurrentPosition.ToString(CultureInfo.InvariantCulture)"
+               value="@Player.TrackCurrentPosition.ToString(CultureInfo.InvariantCulture)"
             @oninput="OnChangeTrackPosition"
-            min="0" max="@Player.CurrentTrackHandler?.Duration.ToString(CultureInfo.InvariantCulture)" 
+            min="0" max="@Player.CurrentTrackHandler.Duration.ToString(CultureInfo.InvariantCulture)" 
         />
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="@trackChangeProgress" aria-valuemin="0" aria-valuemax="100" style="width: @(trackChangeProgress)%; transition: width 3s linear;"></div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="@trackChangeProgress" aria-valuemin="0" aria-valuemax="100" style="width: @(trackChangeProgress)%; transition: width @(LibertyBellConstants.TracksChangeDelayMs)ms linear;"></div>
         </div>
     </div>
 }
@@ -48,7 +49,7 @@ else
 @implements IDisposable
 @code {
     Timer updateTimer;
-    int trackChangeProgress;
+    int trackChangeProgress = 100;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
@@ -65,11 +66,16 @@ else
             {
                 await InvokeAsync(StateHasChanged);
             };
+            updateTimer.Start();
 
             Player.TrackPlay += OnTrackPlay;
             Player.TrackPause += OnTrackPause;
             Player.PlaylistSet += OnPlaylistSet;
             Player.TrackPlaybackEnd += OnTrackPlaybackEnd;
+            Player.TrackPositionChange += OnTrackPositionChange;
+
+            trackChangeProgress = 0;
+
             StateHasChanged();
         }
 
@@ -95,21 +101,11 @@ else
     void OnTrackPlaybackEnd(object sender, EventArgs e)
     {
         trackChangeProgress = 100;
+    }
 
-        // int waitTimeSpanMs = 3000;
-        // int increment = 5;
-        // int updateIntervalMs = (int)(((float)increment / 100) *  waitTimeSpanMs);
-        // trackChangeProgress = 0;
-        // Task.Run(async () =>
-        // {
-        //     do
-        //     {
-        //         await Task.Delay(updateIntervalMs);
-        //         trackChangeProgress += 1;
-        //         await InvokeAsync(StateHasChanged);
-        //     }
-        //     while (trackChangeProgress < 100);
-        // });
+    void OnTrackPositionChange(object sender, EventArgs e)
+    {
+        StateHasChanged();
     }
 
     void OnChangeTrackPosition(ChangeEventArgs args)
