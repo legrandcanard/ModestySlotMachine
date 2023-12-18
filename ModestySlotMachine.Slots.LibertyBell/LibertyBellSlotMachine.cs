@@ -25,7 +25,7 @@ namespace ModestySlotMachine.Slots.LibertyBell
             _payouts = configuration.Payouts;
         }
 
-        public LibertyBellSymbols[] GetSpinResults()
+        public LibertyBellSymbols[] MakeSpin()
         {
             Symbols = new LibertyBellSymbols[ReelAmount];
 

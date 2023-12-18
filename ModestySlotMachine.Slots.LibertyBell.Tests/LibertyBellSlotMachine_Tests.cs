@@ -1,37 +1,31 @@
 namespace ModestySlotMachine.Slots.LibertyBell.Tests
 {
-    public class Tests
+    public class LibertyBellSlotMachine_Tests
     {
+        LibertyBellSlotMachine _libertyBellSlotMachine;
+
         [SetUp]
         public void Setup()
         {
-        }
-
-        [Test]
-        public async Task Test1()
-        {
-            var slot = new LibertyBellSlotMachine(new Configuration
+            _libertyBellSlotMachine = new LibertyBellSlotMachine(new Configuration
             {
                 Payouts = new[]
                 {
-                    new Payout<LibertyBellSymbols>(new[] { new Requirement<LibertyBellSymbols>(LibertyBellSymbols.Horseshoes, 2) }, 5),
+                    new Payout<LibertyBellSymbols>(new[] { new Requirement<LibertyBellSymbols>(LibertyBellSymbols.Horseshoes, 2) }, 5, "Combination 1"),
                     new Payout<LibertyBellSymbols>(
                         new[] {
                             new Requirement<LibertyBellSymbols>(LibertyBellSymbols.Horseshoes, 2),
                             new Requirement<LibertyBellSymbols>(LibertyBellSymbols.Star, 1)
-                        }, 10)
+                        }, 10, "Combination 2")
                 }
             });
+        }
 
-            await slot.PullAsync();
-            
-            if (slot.HasPayout(out Payout<LibertyBellSymbols> payout))
-            {
-
-            }
-
-
-            Assert.Pass();
+        [Test]
+        public void MakeSpin_Returns_3_Symbols()
+        {
+            var symbols = _libertyBellSlotMachine.MakeSpin();
+            Assert.IsTrue(symbols.Length == 3);
         }
     }
 }

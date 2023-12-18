@@ -198,7 +198,7 @@
         await UserDataService.SaveUserDataAsync(userData);
 
         winCombination = null;
-        var results = machine.GetSpinResults();
+        var results = machine.MakeSpin();
 
         AudioService.PlayReelSpinSound();
 
