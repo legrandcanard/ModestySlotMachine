@@ -49,25 +49,25 @@ namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
                 .Next(new Track
                 {
                     Id = Guid.Parse("00c53c45-d1a4-4eb2-a45f-d802d90fa007"),
-                    Name = "little_adventure_95822",
+                    Name = "SergeQuadrado - Little Adventure",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("little_adventure_95822") as byte[]),
                 })
                 .Next(new Track
                 {
                     Id = Guid.Parse("454b7df6-0c77-4ade-925a-06dfed76c40d"),
-                    Name = "in_the_saloon_116225",
+                    Name = "PianoAmor - In The Saloon",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("in_the_saloon_116225") as byte[]),
                 })
                 .Next(new Track
                 {
                     Id = Guid.Parse("2fe6df2e-2927-4550-9cc4-18aec65e5629"),
-                    Name = "cowboy39s_sundown_country_ballad_623",
+                    Name = "JuliusH - Cowboy's Sundown (Country Ballad)",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("cowboy39s_sundown_country_ballad_623") as byte[]),
                 })
                 .Next(new Track
                 {
                     Id = Guid.Parse("380589cd-9753-439a-bd2e-90e66de75b55"),
-                    Name = "cowboy_sunset_music_4274",
+                    Name = "Andrewfai - Cowboy sunset music",
                     AudioStream = new MemoryStream(BackgroundTracks.ResourceManager.GetObject("cowboy_sunset_music_4274") as byte[]),
                 })
                 .Build();
