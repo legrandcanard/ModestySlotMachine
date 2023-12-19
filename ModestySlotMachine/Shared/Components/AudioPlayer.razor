@@ -49,7 +49,7 @@ else
 @implements IDisposable
 @code {
     Timer updateTimer;
-    int trackChangeProgress = 100;
+    int trackChangeProgress = 0;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
@@ -61,7 +61,6 @@ else
         if (firstRender)
         {
             updateTimer = new Timer();
-            updateTimer.Interval = 100;
             updateTimer.Elapsed += async (object? sender, ElapsedEventArgs args) =>
             {
                 await InvokeAsync(StateHasChanged);
@@ -74,39 +73,68 @@ else
             Player.TrackPlaybackEnd += OnTrackPlaybackEnd;
             Player.TrackPositionChange += OnTrackPositionChange;
 
-            trackChangeProgress = 0;
-
-            StateHasChanged();
+            PlayProgressCooldownAnimationAsync();
         }
 
         base.OnAfterRender(firstRender);
     }
 
+    public void Dispose()
+    {
+        Player.TrackPlay -= OnTrackPlay;
+        Player.TrackPause -= OnTrackPause;
+        Player.PlaylistSet -= OnPlaylistSet;
+        Player.TrackPlaybackEnd -= OnTrackPlaybackEnd;
+        Player.TrackPositionChange -= OnTrackPositionChange;
+
+        updateTimer.Stop();
+        updateTimer.Dispose();
+        updateTimer = null;
+    }
+
+    async Task PlayProgressCooldownAnimationAsync()
+    {
+        trackChangeProgress = 0;
+        await InvokeAsync(StateHasChanged);
+        await Task.Delay(10);
+        trackChangeProgress = 100;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    #region Player event handlers
+
     void OnTrackPlay(object sender, EventArgs e)
     {
         trackChangeProgress = 0;
         updateTimer.Start();
+
+        InvokeAsync(StateHasChanged);
     }
 
     void OnTrackPause(object sender, EventArgs e)
     {
         updateTimer.Stop();
+        InvokeAsync(StateHasChanged);
     }
 
     void OnPlaylistSet(object sender, EventArgs e)
     {
-        StateHasChanged();
+        InvokeAsync(StateHasChanged);
     }
 
     void OnTrackPlaybackEnd(object sender, EventArgs e)
     {
-        trackChangeProgress = 100;
+        PlayProgressCooldownAnimationAsync();
     }
 
     void OnTrackPositionChange(object sender, EventArgs e)
     {
-        StateHasChanged();
+        InvokeAsync(StateHasChanged);
     }
+
+    #endregion
+
+    #region Component event handlers
 
     void OnChangeTrackPosition(ChangeEventArgs args)
     {
@@ -136,14 +164,5 @@ else
         Player.Pause();
     }
 
-    public void Dispose()
-    {
-        Player.TrackPlay -= OnTrackPlay;
-        Player.TrackPause -= OnTrackPause;
-        Player.PlaylistSet -= OnPlaylistSet;
-
-        updateTimer.Stop();
-        updateTimer.Dispose();
-        updateTimer = null;
-    }
+    #endregion
 }

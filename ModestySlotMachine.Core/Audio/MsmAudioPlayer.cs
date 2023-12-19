@@ -82,6 +82,9 @@ namespace ModestySlotMachine.Core.Audio
             if (Playlist == null)
                 throw new PlaylistNotSetException();
 
+            if (CurrentTrackHandler.IsPlaying)
+                return;
+
             CurrentTrackHandler.Volume = Volume;
             TrackPlay?.Invoke(this, EventArgs.Empty);
             CurrentTrackHandler.Play();
