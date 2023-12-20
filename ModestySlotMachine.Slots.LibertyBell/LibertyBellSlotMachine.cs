@@ -2,7 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace ModestySlotMachine.Slots.LibertyBell
+namespace ModestSlotMachine.Slots.LibertyBell
 {
     public class LibertyBellSlotMachine
     {

@@ -1,7 +1,7 @@
 ﻿
-using ModestySlotMachine.Core.Entities;
+using ModestSlotMachine.Core.Entities;
 
-namespace ModestySlotMachine.Core.Repositories
+namespace ModestSlotMachine.Core.Repositories
 {
     public interface IUserDataRepository
     {

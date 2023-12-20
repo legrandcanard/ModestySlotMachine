@@ -1,13 +1,13 @@
-﻿using ModestySlotMachine.Core.Entities;
-using ModestySlotMachine.Core.Repositories;
+﻿using ModestSlotMachine.Core.Entities;
+using ModestSlotMachine.Core.Repositories;
 using System.Text.Json;
 
-namespace ModestySlotMachine.Persistent
+namespace ModestSlotMachine.Persistent
 {
     public class LocalUserDataRepository : IUserDataRepository
     {
         protected readonly string BaseDirPath
-            = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Modesty Slot Machine");
+            = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Modest Slot Machine");
 
         protected readonly string UserDataSaveFileName = "user_data.json";
 

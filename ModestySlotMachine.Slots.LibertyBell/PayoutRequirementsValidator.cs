@@ -1,5 +1,5 @@
 ﻿
-namespace ModestySlotMachine.Slots.LibertyBell
+namespace ModestSlotMachine.Slots.LibertyBell
 {
     public class PayoutRequirementsValidator<TSymbol>
         where TSymbol : struct, Enum

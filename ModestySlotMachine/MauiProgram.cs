@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
-using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services;
-using ModestySlotMachine.Core.Audio;
-using ModestySlotMachine.Core.Entities;
-using ModestySlotMachine.Core.Repositories;
-using ModestySlotMachine.Core.Services;
-using ModestySlotMachine.Persistent;
+using ModestSlotMachine.Areas.Slots.LibertyBellSlot.Services;
+using ModestSlotMachine.Core.Audio;
+using ModestSlotMachine.Core.Entities;
+using ModestSlotMachine.Core.Repositories;
+using ModestSlotMachine.Core.Services;
+using ModestSlotMachine.Persistent;
 using Plugin.Maui.Audio;
 using System.Globalization;
 
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     public static class MauiProgram
     {

@@ -1,4 +1,4 @@
-namespace ModestySlotMachine.Slots.LibertyBell.Tests
+namespace ModestSlotMachine.Slots.LibertyBell.Tests
 {
     public class LibertyBellSlotMachine_Tests
     {

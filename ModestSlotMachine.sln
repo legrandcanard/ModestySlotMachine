@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestySlotMachine", "ModestySlotMachine\ModestySlotMachine.csproj", "{DF731BD3-57EA-48D8-8CBF-6122068AF6CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestSlotMachine", "ModestySlotMachine\ModestSlotMachine.csproj", "{DF731BD3-57EA-48D8-8CBF-6122068AF6CD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Slots", "Slots", "{9E527700-004D-45E2-8A27-1E521EF9ACE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{199DD118-21B2-4C94-BBE8-AD6EDAF5F597}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestySlotMachine.Slots.LibertyBell", "ModestySlotMachine.Slots.LibertyBell\ModestySlotMachine.Slots.LibertyBell.csproj", "{89556526-FE09-410E-86C3-340791531D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestSlotMachine.Slots.LibertyBell", "ModestySlotMachine.Slots.LibertyBell\ModestSlotMachine.Slots.LibertyBell.csproj", "{89556526-FE09-410E-86C3-340791531D52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestySlotMachine.Slots.LibertyBell.Tests", "ModestySlotMachine.Slots.LibertyBell.Tests\ModestySlotMachine.Slots.LibertyBell.Tests.csproj", "{2168E379-045F-46D1-BA73-41C00CF617BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestSlotMachine.Slots.LibertyBell.Tests", "ModestySlotMachine.Slots.LibertyBell.Tests\ModestSlotMachine.Slots.LibertyBell.Tests.csproj", "{2168E379-045F-46D1-BA73-41C00CF617BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestySlotMachine.Core", "ModestySlotMachine.Core\ModestySlotMachine.Core.csproj", "{E73C95AA-4293-49FE-811E-5A9E9216336D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestSlotMachine.Core", "ModestySlotMachine.Core\ModestSlotMachine.Core.csproj", "{E73C95AA-4293-49FE-811E-5A9E9216336D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestySlotMachine.Persistent", "ModestySlotMachine.Persistent\ModestySlotMachine.Persistent.csproj", "{498778F2-EC37-4998-AB1E-3686F5BE7B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModestSlotMachine.Persistent", "ModestySlotMachine.Persistent\ModestSlotMachine.Persistent.csproj", "{498778F2-EC37-4998-AB1E-3686F5BE7B2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{522CFDF6-D7DD-4286-8697-A9D245AE2F1C}"
 EndProject

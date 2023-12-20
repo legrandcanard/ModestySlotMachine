@@ -1,4 +1,4 @@
-﻿namespace ModestySlotMachine
+﻿namespace ModestSlotMachine
 {
     public partial class MainPage : ContentPage
     {

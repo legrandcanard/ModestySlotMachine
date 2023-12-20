@@ -1,7 +1,7 @@
 ﻿
 using System.Globalization;
 
-namespace ModestySlotMachine.Core.Entities
+namespace ModestSlotMachine.Core.Entities
 {
     public class UserData
     {

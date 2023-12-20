@@ -1,12 +1,7 @@
-﻿using ModestySlotMachine.Core.Entities;
-using ModestySlotMachine.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModestSlotMachine.Core.Entities;
+using ModestSlotMachine.Core.Repositories;
 
-namespace ModestySlotMachine.Core.Services
+namespace ModestSlotMachine.Core.Services
 {
     public class UserDataService
     {

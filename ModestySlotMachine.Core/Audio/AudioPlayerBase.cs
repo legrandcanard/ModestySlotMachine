@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Core.Audio
+namespace ModestSlotMachine.Core.Audio
 {
     public abstract class AudioPlayerBase
     {

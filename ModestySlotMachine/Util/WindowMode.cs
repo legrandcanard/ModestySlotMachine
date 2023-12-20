@@ -9,7 +9,7 @@ using Microsoft.Maui;
 using Microsoft.UI.Windowing;
 #endif
 
-namespace ModestySlotMachine.Util
+namespace ModestSlotMachine.Util
 {
     internal static class WindowMode
     {

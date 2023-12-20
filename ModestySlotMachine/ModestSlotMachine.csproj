@@ -6,17 +6,17 @@
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
         <OutputType>Exe</OutputType>
-        <RootNamespace>ModestySlotMachine</RootNamespace>
+        <RootNamespace>ModestSlotMachine</RootNamespace>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
 
         <!-- Display name -->
-        <ApplicationTitle>ModestySlotMachine</ApplicationTitle>
+        <ApplicationTitle>ModestSlotMachine</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.modestyslotmachine</ApplicationId>
+        <ApplicationId>com.companyname.Modestslotmachine</ApplicationId>
         <ApplicationIdGuid>181095FA-606B-44CA-B0B1-2D6048211BD8</ApplicationIdGuid>
 
         <!-- Versions -->
@@ -36,43 +36,43 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-      <ApplicationTitle>Modesty Slot Machine</ApplicationTitle>
-      <ApplicationId>com.vm404.modestyslotmachine</ApplicationId>
+      <ApplicationTitle>Modest Slot Machine</ApplicationTitle>
+      <ApplicationId>com.vm404.Modestslotmachine</ApplicationId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -113,9 +113,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ModestySlotMachine.Core\ModestySlotMachine.Core.csproj" />
-      <ProjectReference Include="..\ModestySlotMachine.Persistent\ModestySlotMachine.Persistent.csproj" />
-      <ProjectReference Include="..\ModestySlotMachine.Slots.LibertyBell\ModestySlotMachine.Slots.LibertyBell.csproj" />
+      <ProjectReference Include="..\ModestySlotMachine.Core\ModestSlotMachine.Core.csproj" />
+      <ProjectReference Include="..\ModestySlotMachine.Persistent\ModestSlotMachine.Persistent.csproj" />
+      <ProjectReference Include="..\ModestySlotMachine.Slots.LibertyBell\ModestSlotMachine.Slots.LibertyBell.csproj" />
     </ItemGroup>
 
     <ItemGroup>

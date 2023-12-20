@@ -1,4 +1,4 @@
-﻿using ModestySlotMachine.Core.Audio.Exceptions;
+﻿using ModestSlotMachine.Core.Audio.Exceptions;
 using Plugin.Maui.Audio;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Core.Audio
+namespace ModestSlotMachine.Core.Audio
 {
     public class MsmAudioPlayer : AudioPlayerBase
     {

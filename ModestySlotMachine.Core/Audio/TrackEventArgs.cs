@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Core.Audio
+namespace ModestSlotMachine.Core.Audio
 {
     public class TrackEventArgs : EventArgs
     {

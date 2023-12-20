@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

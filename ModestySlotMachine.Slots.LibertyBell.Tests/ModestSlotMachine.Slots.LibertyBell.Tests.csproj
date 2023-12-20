@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModestySlotMachine.Slots.LibertyBell\ModestySlotMachine.Slots.LibertyBell.csproj" />
+    <ProjectReference Include="..\ModestySlotMachine.Slots.LibertyBell\ModestSlotMachine.Slots.LibertyBell.csproj" />
   </ItemGroup>
 
 </Project>

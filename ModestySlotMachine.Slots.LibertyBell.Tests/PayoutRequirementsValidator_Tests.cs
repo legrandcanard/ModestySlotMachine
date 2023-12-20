@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Slots.LibertyBell.Tests
+namespace ModestSlotMachine.Slots.LibertyBell.Tests
 {
     public class PayoutRequirementsValidator_Tests
     {

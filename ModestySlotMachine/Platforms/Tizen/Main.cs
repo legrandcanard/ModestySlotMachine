@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     internal class Program : MauiApplication
     {

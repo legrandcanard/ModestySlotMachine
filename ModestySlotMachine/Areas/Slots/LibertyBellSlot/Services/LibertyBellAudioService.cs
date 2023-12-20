@@ -1,18 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Resources;
-using ModestySlotMachine.Areas.Slots.LibertyBellSlot.Util;
-using ModestySlotMachine.Core.Audio;
-using ModestySlotMachine.Core.Entities;
-using ModestySlotMachine.Core.Services;
+﻿using ModestSlotMachine.Areas.Slots.LibertyBellSlot.Resources;
+using ModestSlotMachine.Areas.Slots.LibertyBellSlot.Util;
+using ModestSlotMachine.Core.Audio;
+using ModestSlotMachine.Core.Services;
 using Plugin.Maui.Audio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Services
+namespace ModestSlotMachine.Areas.Slots.LibertyBellSlot.Services
 {
     public class LibertyBellAudioService : AudioPlayerBase, IDisposable
     {

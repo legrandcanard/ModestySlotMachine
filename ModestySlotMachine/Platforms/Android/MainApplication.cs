@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     [Application]
     public class MainApplication : MauiApplication

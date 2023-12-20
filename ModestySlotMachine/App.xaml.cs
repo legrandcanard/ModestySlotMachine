@@ -1,5 +1,5 @@
 ﻿
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     public partial class App : Application
     {

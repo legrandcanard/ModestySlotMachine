@@ -1,7 +1,7 @@
 ﻿
 using System.Globalization;
 
-namespace ModestySlotMachine.Areas.Slots.LibertyBellSlot.Util
+namespace ModestSlotMachine.Areas.Slots.LibertyBellSlot.Util
 {
     internal class LibertyBellCurrencyFormatPrivider
         : IFormatProvider, ICustomFormatter

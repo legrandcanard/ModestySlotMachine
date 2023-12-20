@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace ModestySlotMachine
+namespace ModestSlotMachine
 {
     public class Program
     {
