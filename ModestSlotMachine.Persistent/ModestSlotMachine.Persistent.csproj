@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModestySlotMachine.Core\ModestSlotMachine.Core.csproj" />
+    <ProjectReference Include="..\ModestSlotMachine.Core\ModestSlotMachine.Core.csproj" />
   </ItemGroup>
 
 </Project>

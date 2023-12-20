@@ -113,9 +113,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ModestySlotMachine.Core\ModestSlotMachine.Core.csproj" />
-      <ProjectReference Include="..\ModestySlotMachine.Persistent\ModestSlotMachine.Persistent.csproj" />
-      <ProjectReference Include="..\ModestySlotMachine.Slots.LibertyBell\ModestSlotMachine.Slots.LibertyBell.csproj" />
+      <ProjectReference Include="..\ModestSlotMachine.Core\ModestSlotMachine.Core.csproj" />
+      <ProjectReference Include="..\ModestSlotMachine.Persistent\ModestSlotMachine.Persistent.csproj" />
+      <ProjectReference Include="..\ModestSlotMachine.Slots.LibertyBell\ModestSlotMachine.Slots.LibertyBell.csproj" />
     </ItemGroup>
 
     <ItemGroup>
