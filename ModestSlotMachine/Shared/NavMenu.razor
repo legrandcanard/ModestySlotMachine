@@ -12,11 +12,19 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/LibertyBellSlot">
-                <span class="mdi mdi-cards-playing-club-multiple" aria-hidden="true"></span> Game
-            </NavLink>
-        </div>
+        <fieldset>
+            <legend>Games</legend>
+            <div class="nav-item px-2">
+                <NavLink class="nav-link" href="/LibertyBellSlot">
+                    <span class="mdi mdi-cards-playing-club-multiple" aria-hidden="true"></span> Liberty Bell
+                </NavLink>
+            </div>
+            <div class="nav-item px-2 text-muted item-locked">
+                <NavLink class="nav-link">
+                    <span class="mdi mdi-lock" aria-hidden="true"></span> Not available yet
+                </NavLink>
+            </div>
+        </fieldset>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/Balance">
                 <span class="mdi mdi-wallet" aria-hidden="true"></span> Balance

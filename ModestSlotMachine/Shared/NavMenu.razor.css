@@ -47,17 +47,15 @@
         line-height: 3rem;
     }
 
+    .nav-item ::deep a.active {
+        background-color: rgba(255,255,255,0.25);
+        color: #ebe4d1;
+    }
 
-
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
-
-        .nav-item ::deep a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-        }
+    .nav-item ::deep a:hover {
+        background-color: rgba(255,255,255,0.1);
+        color: #ebe4d1;
+    }
 
 .btn-menu {
     background-color: rgba(255,255,255,0.0);
@@ -92,4 +90,25 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+
+.item-locked {
+    color: #ffffff5e;
+    cursor: pointer;
+}
+
+fieldset {
+    border: 2px solid #9e566f;
+    border-radius: 5px;
+}
+
+legend {
+    float: initial;
+    width: initial;
+    padding: 0 5px;
+    margin-bottom: initial;
+    margin-left: 1rem;
+    color: #ebe4d1;
+    font-size: 1rem;
+    font-weight: 600;
 }
