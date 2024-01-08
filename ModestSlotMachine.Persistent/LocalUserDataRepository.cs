@@ -21,8 +21,11 @@ namespace ModestSlotMachine.Persistent
                 {
                     UserSettings = new UserData.Settings
                     {
-                        Selectedlanguage = "en-US"
-                    }
+                        Selectedlanguage = "en-US",
+                        SoundVolume = 1,
+                        FxSoundVolume = 1
+                    },
+                    Balance = 1
                 };
                 await SaveUserDataAsync(defaultUserData);
                 return defaultUserData;
